@@ -3,6 +3,7 @@ import Layout from "../Layout/Layout";
 
 const Faq = () => {
   return (
+    
     <Layout>
       <>
         <section className="common_banner">
