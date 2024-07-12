@@ -53,8 +53,8 @@ const Navbar = () => {
                             <a href="javascript:;">Business </a>
                             <div className="Productsmenu">
                               <div className="megadropdown_menus">
-                                <a href="javascript:;">SME</a>
-                                <a href="javascript:;">Corporate</a>
+                                <Link to="/sme-plan">SME </Link>
+                                <Link to="/corporate-plan">Corporate </Link>
                               </div>
                             </div>
                           </div>
@@ -200,10 +200,10 @@ const Navbar = () => {
                             <a href="javascript:;">Tourist Visa</a>
                           </li>
                           <li>
-                            <a href="smeplan.html">SME </a>
+                            <Link to="sme-plan">SME </Link>
                           </li>
                           <li>
-                            <a href="corporate-plan.html">Corporate </a>
+                            <Link to="corporate-plan">Corporate </Link>
                           </li>
                         </ul>
                       </div>

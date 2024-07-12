@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -105,9 +106,9 @@ const Footer = () => {
             Copyright © 2024 saudi enaya | All Rights Reserved |
           </div>
           <div className="copy_links">
-            <a href="terms-and-conditions.html">Terms and Conditions</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
-            <a href="disclaimer.html">Disclaimer</a>
+            <Link to="/terms-and-conditions">Terms and Conditions</Link>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/disclaimer">Disclaimer</Link>
           </div>
         </div>
       </div>

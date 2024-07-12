@@ -113,7 +113,7 @@ const ReportFraud = () => {
                 </div>
                 <img
                   className="bottom_logo"
-                  src="assets/img/overlay_logo.png"
+                  src="/assets/img/overlay_logo.png"
                   alt
                 />
               </div>
@@ -160,7 +160,7 @@ const ReportFraud = () => {
                 <h3>Report Policy Benefit</h3>
                 <p>So it really behaves like neither. Now we have given up. </p>
                 <a className="btn_btm" href="javascript:;">
-                  Learn More <img src="/assets/img/arrow-right-line.png" alt />
+                  Learn More <img src="/assets/img/arrow-right-line.png" alt='i' />
                 </a>
               </div>
             </div>
