@@ -1,20 +1,19 @@
 import React from "react";
 import Layout from "./Layout/Layout";
 import ProfileModal from "./Profile/ProfileModal";
+import BackBtn from "../utils/BackBtn";
 
 const ProvideNetwork = () => {
   return (
     <Layout>
-        <ProfileModal />
+        {/* <ProfileModal /> */}
       <div className="policy_information pt-4 pb-md-5 pb-4">
         <div className="container pb-2">
           <div className="row">
             <div className="col-md-12 mb-lg-4 mb-md-3 mb-3">
               <div className="row info_head align-items-center mb-md-3">
                 <div className="col d-flex align-items-center">
-                  <a href="javascript:;">
-                    <img src="/assets/img/arrow-left1.png" alt />
-                  </a>
+                  <BackBtn />
                   <h2>Services</h2>
                 </div>
               </div>

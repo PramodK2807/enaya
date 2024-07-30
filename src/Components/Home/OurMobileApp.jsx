@@ -16,28 +16,28 @@ const OurMobileApp = () => {
             </div>
           </div>
           <div className="col-md-12">
-            <div className="row align-items-center">
-              <div className="col-md-6">
+            <div className="row align-items-center justify-content-center">
+              <div className="col-lg-5 col-md-6">
                 <div className="OurMobile_content">
-                  <div className="OurMobile_box text-md-end">
+                  <div className="OurMobile_box">
                     <h3>Easy Access to Policy Details: </h3>
                     <p>View your policy information anytime, anywhere.</p>
                   </div>
-                  <div className="OurMobile_box text-md-end">
+                  <div className="OurMobile_box">
                     <h3>Submit Claims Effortlessly: </h3>
                     <p>File and track your claims with just a few taps.</p>
                   </div>
-                  <div className="OurMobile_box text-md-end">
+                  <div className="OurMobile_box">
                     <h3>Find Providers Quickly: </h3>
                     <p>
                       Locate hospitals and clinics in our network with ease.
                     </p>
                   </div>
-                  <div className="OurMobile_box text-md-end">
+                  <div className="OurMobile_box">
                     <h3>Check Benefits and Coverage: </h3>
                     <p>Understand what’s included in your plan at a glance. </p>
                   </div>
-                  <div className="OurMobile_box text-md-end">
+                  <div className="OurMobile_box">
                     <h3>Real-Time Updates: </h3>
                     <p>
                       Receive notifications about your claims and policy
@@ -46,7 +46,7 @@ const OurMobileApp = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 order_top">
+              <div className="col-lg-4 col-md-6 order_top">
                 <div className="OurMobile_video">
                   <video
                     className="video_mobile"

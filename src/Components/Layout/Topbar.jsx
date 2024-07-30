@@ -1,6 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Topbar = () => {
+  const userData = useSelector((state) => state?.user?.userData);
   return (
     <>
       <div className="top_header">
@@ -79,12 +82,24 @@ const Topbar = () => {
                       <img
                         className="srch_ico"
                         src="/assets/img/srch.png"
-                        alt
+                        alt="search"
                       />
                     </div>
                   </form>
                 </div>
                 <div className="col-auto">
+                  {userData && (
+                    <Link to={"/profile"}>
+                      <img src="/assets/img/account.png" alt="" />
+                    </Link>
+                  )}
+                  {!userData && (
+                    <Link to={"/login"}>
+                      <img src="/assets/img/account.png" alt="" />
+                    </Link>
+                  )}
+                </div>
+                {/* <div className="col-auto">
                   <a
                     className="myaccount_part"
                     data-bs-toggle="modal"
@@ -93,7 +108,7 @@ const Topbar = () => {
                   >
                     <img src="/assets/img/account.png" alt /> My Account
                   </a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

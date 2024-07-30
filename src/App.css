@@ -1,0 +1,40 @@
+.form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
+
+.form_desig .form-floating {
+  margin-bottom: 24px;
+  position: relative;
+}
+.quote_form .form-floating {
+  margin-bottom: 30px;
+  position: relative;
+}
+.quote_main .form-floating > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@media (max-width: 767px) {
+  .form-floating > label {
+    position: absolute;
+    top: -3px;
+    left: 14px;
+  }
+  .quote_form .form-floating {
+    margin-bottom: 20px;
+  }
+}
+.css-b62m3t-container {
+  position: absolute !important;
+  box-sizing: border-box !important;
+  padding: 0;
+  left: 0;
+  top: 0;
+}
+.css-19bb58m{
+  padding: 12px 0 !important;
+}

@@ -1,6 +1,7 @@
 import React from "react";
 import Card2 from "../Common/Card2";
 
+
 const OnlineServices = () => {
   return (
     <section className="ouronline_services comman_padding">
@@ -20,6 +21,7 @@ const OnlineServices = () => {
             title={"Claims"}
             desc={"Submit new or track existing claims."}
             logoPath={"assets/img/claims.png"}
+            navigate={"/claim-management"}
           />
           <Card2
             title={"Search Provider Network"}
@@ -27,6 +29,7 @@ const OnlineServices = () => {
               "Find hospitals and clinics in our network with our easy search tool."
             }
             logoPath={"assets/img/carbon_certificate-check.png"}
+            navigate={"/network-provider"}
           />
           <Card2
             title={"Visit Visa Insurance Extension"}

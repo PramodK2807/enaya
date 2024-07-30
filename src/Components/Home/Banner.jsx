@@ -71,13 +71,13 @@ const Banner = () => {
               </div>
             </div>
             <div className="bannerbox_right">
-              <img src="/assets/img/banner_img.png" alt='i' />
+              <img src="/assets/img/Homepage.jpg" alt='i' />
             </div>
           </div>
         </div>
       </section>
       <section className="therre_boxes">
-        <div className="container pb_50 overflow-hidden">
+        <div className="container pb-5 overflow-hidden">
           <div className="row">
             <Card1
               title={"SME"}

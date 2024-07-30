@@ -68,7 +68,7 @@ const Navbar = () => {
                     <div className="menus_icon">
                       <img src="/assets/img/icon_3.png" alt />
                     </div>
-                    <span> Our Services</span>
+                    <span> E-Services</span>
                     <div className="arroww_icon">
                       <img src="/assets/img/down.png" alt />
                     </div>
@@ -145,15 +145,15 @@ const Navbar = () => {
                 </li>
               </ul>
             </div>
-            <a className="Add_Claims" href="javascript:;">
+            {/* <a className="Add_Claims" href="javascript:;">
               Add Claims
-            </a>
+            </a> */}
           </div>
           <div className="col-auto d-lg-none d-md-block d-block">
             <div className="mobile_menuss">
-              <a className="Add_Claims" href="javascript:;">
+              {/* <a className="Add_Claims" href="javascript:;">
                 Add Claims
-              </a>
+              </a> */}
               <a
                 className="btn btn-primary"
                 data-bs-toggle="offcanvas"
@@ -210,7 +210,7 @@ const Navbar = () => {
                     </div>
                     <div className="mobilemenus_box">
                       <a className="mobile_link droparrow" href="javscript:;">
-                        Our Services
+                        E-Services
                       </a>
                       <div className="menus_boxinner">
                         <ul className="menus_ul">

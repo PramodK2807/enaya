@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import './App.css'
 import Home from "./Components/Home/Home";
 import BrokerPortal from "./Components/OurServices/BrokerPortal";
 import Endorse from "./Components/OurServices/Endorse";
@@ -19,12 +20,13 @@ import Desclaimer from "./Components/Desclaimer";
 import PrivacyPolicy from "./Components/PrivacyPolicy";
 import HelpAndSupport from "./Components/ContactUs/HelpAndSupport";
 import GetQuote from "./Components/GetQuote";
-import ClaimManagement from "./Components/ClaimManagement";
 import MyPolicyBenefits from "./Components/Profile/MyPolicyBenefits";
-import NewClaim from "./Components/NewClaim";
 import ProvideNetwork from "./Components/ProvideNetwork";
 import NetworkProvider from "./Components/NetworkProvider";
 import SelectYourAccount from "./Components/Auth/SelectYourAccount";
+import ClaimManagement from "./Components/ClaimManagement/ClaimManagement";
+import NewClaim from "./Components/ClaimManagement/NewClaim";
+import PolicyInfo from "./Components/Profile/PolicyInfo";
 
 function App() {
   return (
@@ -58,13 +60,14 @@ function App() {
       <Route exact path="/profile" element={<MyProfile />} />
       <Route exact path="/edit-profile" element={<EditProfile />} />
       <Route exact path="/policy-benefits" element={<MyPolicyBenefits />} />
+      <Route exact path="/policy-info" element={<PolicyInfo />} />
       <Route exact path="/terms-and-conditions" element={<Terms />} />
       <Route exact path="/disclaimer" element={<Desclaimer />} />
       <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route exact path="/help-&-support" element={<HelpAndSupport />} />
       <Route exact path="/get-quote" element={<GetQuote />} />
       <Route exact path="/claim-management" element={<ClaimManagement />} />
-      <Route exact path="/new-claim" element={<NewClaim />} />
+      <Route exact path="/claim-management/add-new" element={<NewClaim />} />
       <Route exact path="/provide-network" element={<ProvideNetwork />} />
       <Route exact path="/network-provider" element={<NetworkProvider />} />
       <Route exact path="/select-your-account" element={<SelectYourAccount />} />

@@ -3,7 +3,7 @@ import Layout from "../Layout/Layout";
 import Banner from "./Banner";
 import OnlineServices from "./OnlineServices";
 import OurMobileApp from "./OurMobileApp";
-import { Link } from "react-router-dom";
+
 
 const Home = () => {
   return (
@@ -11,12 +11,12 @@ const Home = () => {
       <Banner />
       <OnlineServices />
 
-      <section className="similardesign comman_padding">
+      <section className="similardesign comman_padding overflow-hidden">
         <div className="container">
           <div className="row similar1 align-items-center">
             <div className="col-md-7" data-aos="fade-right">
               <div className="similar_img">
-                <img src="assets/img/semplan.png" alt />
+                <img src="/assets/img/sme_imgg.jpg" alt />
               </div>
             </div>
             <div className="col-md-5 ps-md-4 pe-md-5" data-aos="fade-left">
@@ -27,15 +27,13 @@ const Home = () => {
                   specifically for small and medium enterprises, ensuring your
                   business and employees are well-protected.
                 </p>
-                <Link className="link_part" to="sme-plan">
+                <a className="link_part" href="smeplan.html">
                   Learn More
-                  <img src="assets/img/arrow.png" alt='i' />
-                </Link>
+                  <img src="/assets/img/arrow.png" alt />
+                </a>
               </div>
             </div>
           </div>
-
-          
           <div className="row similar2 align-items-center">
             <div className="col-md-5 pe-md-4 ps-md-5" data-aos="fade-right">
               <div className="similar_content">
@@ -46,15 +44,15 @@ const Home = () => {
                   businesses, ensuring comprehensive protection for your company
                   and employees.
                 </p>
-                <Link className="link_part" to="corporate-plan">
+                <a className="link_part" href="corporate-plan.html">
                   Learn More
-                  <img src="assets/img/arrow.png" alt='i' />
-                </Link>
+                  <img src="/assets/img/arrow.png" alt />
+                </a>
               </div>
             </div>
             <div className="col-md-7" data-aos="fade-left">
               <div className="similar_img">
-                <img src="assets/img/corporateplan.png" alt='i' />
+                <img src="/assets/img/corporate.jpg" alt />
               </div>
             </div>
           </div>
