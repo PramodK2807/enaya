@@ -33,7 +33,7 @@ const GetQuote = () => {
         <section className="request_a_quote">
           <div className="container">
             <div className="request_inner row">
-              <div className="col-md-12">
+              {/* <div className="col-md-12">
                 <div className="comman_head text-center">
                   <h2>Request a quote (Form)</h2>
                   <p>
@@ -42,105 +42,91 @@ const GetQuote = () => {
                     turpis lobortis donec sapien integer.
                   </p>
                 </div>
-              </div>
+              </div> */}
               <div className="col-md-12">
                 <div className="row quote_main">
-                  <div className="col-md-6 quote_head mb-md-5 mb-4">
-                    <h2>Want to reach out directly?</h2>
+                  <div className="quote_head mb-md-5 mb-4">
+                    <h2>Reach out directly?</h2>
                   </div>
                   <div className="col-lg-10">
                     <form className="row quote_form" action>
-                      <div className="col-md-6 form-group pe-lg-5">
+                      <div className="form-floating col-md-6 pe-lg-5">
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
-                          placeholder="Name*"
-                        />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
+                          id="floatingInput"
                           placeholder="Company Name*"
                         />
+                        <label htmlFor="floatingInput">Company Name*</label>
                       </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Email Address*"
-                        />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Phone Number*"
-                        />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Commercial Registration Number"
-                        />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
+                      <div className="form-floating col-md-6 pe-lg-5">
                         <select
-                          className="form-select form-control"
-                          aria-label="Default select example"
+                          className="form-select"
+                          id="floatingSelect"
+                          aria-label="Floating label select example"
                         >
-                          <option selected>Company Type</option>
-                          <option value={1}>One</option>
-                          <option value={2}>Two</option>
-                          <option value={3}>Three</option>
+                          <option value>Select City</option>
+                          <option value="Abha">Abha</option>
+                          <option value="Al-Ahsa">Al-Ahsa</option>
+                          <option value="Al-Khobar">Al-Khobar</option>
+                          <option value="Baha">Baha</option>
+                          <option value="Dammam">Dammam</option>
+                          <option value="Dhahran">Dhahran</option>
+                          <option value="Hail">Hail</option>
+                          <option value="Jeddah">Jeddah</option>
+                          <option value="Jizan">Jizan</option>
+                          <option value="Jouf">Jouf</option>
+                          <option value="Jubail">Jubail</option>
+                          <option value="Madinah">Madinah</option>
+                          <option value="Makkah">Makkah</option>
+                          <option value="Najran">Najran</option>
+                          <option value="Qassem">Qassem</option>
+                          <option value="Qatif">Qatif</option>
+                          <option value="Riyadh">Riyadh</option>
+                          <option value="Tabouk">Tabouk</option>
+                          <option value="Taif">Taif</option>
+                          <option value="Yanbu">Yanbu</option>
                         </select>
                       </div>
-                      <div className="col-md-6 form-group pe-lg-5">
+                      <div className="form-floating col-md-6 pe-lg-5">
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
-                          placeholder="National Unified Number"
+                          id="floatingInput"
+                          placeholder="Number of Employees"
                         />
+                        <label htmlFor="floatingInput">
+                          Number of Employees
+                        </label>
                       </div>
-                      <div className="col-md-6 form-group pe-lg-5">
+                      <div className="form-floating col-md-6 pe-lg-5">
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
-                          placeholder="Registration Type"
+                          id="floatingInput"
+                          placeholder="Contact Email*"
                         />
+                        <label htmlFor="floatingInput">Contact Email*</label>
                       </div>
-                      <div className="col-md-6 form-group pe-lg-5">
+                      <div className="form-floating col-md-6 pe-lg-5">
                         <input
-                          type="text"
+                          type="email"
                           className="form-control"
-                          placeholder="Policy inception date"
+                          id="floatingInput"
+                          placeholder="Contact Number*"
                         />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Number of Company Employees *"
-                        />
-                      </div>
-                      <div className="col-md-6 form-group pe-lg-5">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="City"
-                        />
+                        <label htmlFor="floatingInput">Contact Number*</label>
                       </div>
                       <div className="col-md-12 form-group pe-md-5">
                         <button className="form_btns" type="submit">
-                          Send message
+                          Request Quotation
                         </button>
                       </div>
                     </form>
                   </div>
                   <img
                     className="bottom_logo"
-                    src="assets/img/overlay_logo.png"
+                    src="/assets/img/overlay_logo.png"
                     alt="i"
                   />
                 </div>
@@ -148,7 +134,7 @@ const GetQuote = () => {
             </div>
           </div>
         </section>
-        <section className="ouronline_services comman_padding">
+        {/* <section className="ouronline_services comman_padding">
           <div className="container">
             <div className="row">
               <div className="col-12">
@@ -200,7 +186,7 @@ const GetQuote = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </>
     </Layout>
   );

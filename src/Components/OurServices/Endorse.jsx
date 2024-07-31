@@ -74,32 +74,47 @@ const Endorse = () => {
           </div>
         </section>
 
-        <section className="similardesign corpo_insurance comman_padding">
+        <section className="similardesign comman_padding">
           <div className="container">
-            <div className="row similar1 align-items-center mb-0">
+            <div className="row similar1 align-items-center">
               <div className="col-md-6" data-aos="fade-right">
                 <div className="similar_img">
-                  <img src="/assets/img/corporate01.png" alt="corp" />
+                  <img src="/assets/img/semplan.png" alt />
                 </div>
               </div>
-              <div className="col-md-6 pe-5" data-aos="fade-left">
+              <div className="col-md-6 pe-md-5" data-aos="fade-left">
                 <div className="similar_content">
-                  <h2>Transform Your Sales Experience Today!</h2>
+                  <h2>Transform Your Member Management Today!</h2>
                   <p>
-                    Join the growing number of brokers who are transforming
-                    their sales experience with our innovative online portal.
+                    Join the growing number of corporate and SME customers who
+                    are revolutionizing their member management with Saudi
+                    Enaya's Endorsement Portal. Experience the freedom of
+                    instant updates, seamless migrations, and hassle-free member
+                    management.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="row similar2 align-items-center">
+              <div className="col-md-6 ps-md-5" data-aos="fade-right">
+                <div className="similar_content">
+                  <h2>Sign Up Now and Simplify Your Member Management!</h2>
+                  <p>
+                    Ready to take control of your member management? Sign up
+                    today and discover the difference Saudi Enaya's Endorsement
+                    Portal can make for your business. Enhance your efficiency,
+                    save time, and ensure your member records are always
+                    accurate and up to date.
                   </p>
                   <p>
-                    Your success is our priority. With our online portal,
-                    selling insurance has never been easier or more efficient.
-                    Start today and see the difference for yourself!
+                    Reach out! if you want to be part of this Journey{" "}
+                    <a href="mailto:MSD@saudienaya.com">MSD@saudienaya.com</a>
                   </p>
-                  <p>
-                    Please send an email if you want to be reseller{" "}
-                    <a href="mailto:sebrokerteam@saudienaya.com">
-                      sebrokerteam@saudienaya.com
-                    </a>
-                  </p>
+                </div>
+              </div>
+              <div className="col-md-6" data-aos="fade-left">
+                <div className="similar_img">
+                  <img src="/assets/img/corporateplan.png" alt />
                 </div>
               </div>
             </div>

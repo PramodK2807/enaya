@@ -38,3 +38,28 @@
 .css-19bb58m{
   padding: 12px 0 !important;
 }
+.quote_form .form-control , .quote_form .form-select {
+  border: 0 !important;
+  border-bottom: 2px solid rgba(181, 181, 181, 0.24) !important;
+  font-weight: 400;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 1) !important;
+  box-shadow: unset !important;
+  background-color: transparent;
+  padding: 10px 0;
+  border-radius: 0;
+  height: 58px;
+}
+.quote_form .form-floating {
+  margin-bottom: 30px;
+  position: relative;
+}
+.quote_form .form-floating {
+  margin-bottom: 20px; 
+}
+/* .select_box > label{
+  top: -7px !important;
+} */
+.select_box > .form-select{
+  line-height: 3.25 !important;
+}

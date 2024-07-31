@@ -180,7 +180,7 @@ h6 {
   background-color: rgba(249, 249, 249, 1) !important;
   box-shadow: unset !important;
   font-size: 16px;
-  height: 50px;
+  height: 58px;
   border: 1px solid rgba(230, 230, 230, 1);
   padding: 0 20px;
 }
@@ -344,7 +344,7 @@ h6 {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 99;
+  z-index: 9999;
 }
 .header_menus .menus_li .mega_dropdown {
   background: #fff;
@@ -569,7 +569,7 @@ h6 {
   border: 1px solid rgba(230, 230, 230, 1);
   background: rgba(249, 249, 249, 1);
   border-radius: 5px;
-  height: 50px;
+  height: 58px;
   font-size: 16px;
   font-weight: 400;
   color: rgba(115, 115, 115, 1);
@@ -580,7 +580,7 @@ h6 {
   border: 1px solid rgba(230, 230, 230, 1);
   background: rgba(249, 249, 249, 1);
   color: rgba(115, 115, 115, 1);
-  height: 50px;
+  height: 58px;
   font-size: 16px;
   font-weight: 400;
   box-shadow: unset;
@@ -591,12 +591,17 @@ h6 {
   background-repeat: no-repeat;
   background-position: 95% center;
 }
+.form-floating>label {
+  position: absolute;
+  top: 0;
+  left: 20px;
+}
 .new_claim .form_desig .form-control, .new_claim .form_desig .form-select {
   background-color: #fff;
-  height: 55px;
+  height: 58px;
   font-size: 17px;
 }
-.form_desig .form-group {
+.form_desig .form-floating {
   margin-bottom: 24px;
   position: relative;
 }
@@ -734,11 +739,11 @@ h6 {
 .eyebtn {
   border: 0;
   background: transparent !important;
-  box-shadow: unset !IMPORTANT;
+  box-shadow: unset ! IMPORTANT;
   padding: 0;
   position: absolute;
   right: 40px;
-  top: 12px;
+  top: 16px;
 }
 .forgotpassword {
   font-weight: 600;
@@ -1550,23 +1555,27 @@ h6 {
 .request_a_quote {
   padding: 70px 0 20px;
 }
-.quote_form .form-control::placeholder{
-  color: rgba(0, 0, 0, 1) !important;
-}
-.quote_form .form-control {
+ 
+.quote_form .form-control , .quote_form .form-select {
   border: 0 !important;
   border-bottom: 2px solid rgba(181, 181, 181, 0.24) !important;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 18px;
   color: rgba(0, 0, 0, 1) !important;
   box-shadow: unset !important;
   background-color: transparent;
   padding: 10px 0;
   border-radius: 0;
+  height: 58px;
 }
-.quote_form .form-group {
-  margin-bottom: 35px;
+.quote_form .form-floating {
+  margin-bottom: 30px;
   position: relative;
+}
+.quote_main .form-floating>label {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .bottom_logo {
   max-width: 397px;
@@ -3112,14 +3121,12 @@ h6 {
   background-color: #F6F6F6;
 }
 .networksbox {
-  /* background-color: #fff; */
+  box-shadow: 0px 4.42px 27.65px 0px #0000000A;
+  background-color: #fff;
   padding: 20px 20px;
   border-radius: 12px;
   display: block;
   transition: 0.3s ease-in-out;
-}
-.my_shadow{
-  box-shadow: 0px 4.42px 27.65px 0px #0000000A;
 }
 .networksbox:hover{
   transform: translateY(-5px);
@@ -3333,9 +3340,6 @@ h6 {
 }
 
 @media (max-width:1023px) {
-  .slick-dots{
-    display: none !important;
-  }
   .auth_page_content h1 {
       font-size: 40px;
       font-weight: 700;
@@ -4023,11 +4027,16 @@ body {
       line-height: 22px;
       margin-bottom: 0;
   }
-  .form_desig .form-control , .form_desig .form-select {
-    height: 46px;
+  .form_desig .form-control, .form_desig .form-select {
+    height: 54px;
     font-size: 15px;
     padding: 10px 14px;
-}
+  }
+  .form-floating>label {
+    position: absolute;
+    top: -3px;
+    left: 14px;
+  }
   .form_desig .form-group {
       margin-bottom: 20px;
   }
@@ -4035,9 +4044,9 @@ body {
       font-size: 15px;
       margin-top: -7px;
   }
-  .form_btns , .form_btns1 {
+  .form_btns, .form_btns1 {
     height: 49px;
-    padding: 10px 40px;
+    padding: 10px 20px;
     font-size: 18px;
     margin-top: 8px;
     display: flex;
@@ -4803,7 +4812,7 @@ body{
   margin-bottom: 0;
 }
 .new_claim .form_desig .form-control, .new_claim .form_desig .form-select {
-  height: 50px;
+  height: 55px;
   font-size: 16px;
 }
 .checkbox_main label { 
@@ -4848,6 +4857,9 @@ body {
 }
 .logo img {
   max-width: 124px;
+}
+.quote_form .form-floating {
+  margin-bottom: 20px; 
 }
 }
 .swal2-popup.swal2-toast .swal2-title{

@@ -10,117 +10,26 @@ const SmePlan = () => {
             <div className="row align-items-center">
               <div className="col-md-6" data-aos="fade-right">
                 <div className="plan_content">
-                  <div className="title_top">SME Plan</div>
                   <h1>
-                    When you have a <span>business run</span> and a{" "}
-                    <span>family</span> to look after
+                    SME <span>Health Insurance</span> Plans
                   </h1>
                   <p>
-                    Lorem Ipsum&nbsp;is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum.
+                    At Saudi Enaya, we cater to the distinct needs of small and
+                    medium-sized enterprises. Our insurance products are fully
+                    customizable to meet the specific requirements of your
+                    business and employees. We provide comprehensive and
+                    affordable benefits designed to support the growth and
+                    security of your SME. Discover the perfect insurance
+                    solution tailored to fit your needs.
                   </p>
                   <a className="plan_btn" href="javscript:;">
-                    Get In Touch
+                    Get Insured
                   </a>
                 </div>
               </div>
               <div className="col-md-6 text-end" data-aos="fade-left">
                 <div className="plan_img">
-                  <img src="/assets/img/Mozilla.png" alt="star" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="similardesign sem_insurance comman_padding">
-          <div className="container">
-            <div className="row similar1 align-items-center mb-0">
-              <div className="col-md-7" data-aos="fade-right">
-                <div className="similar_img">
-                  <img src="/assets/img/semm.png" alt="star" />
-                </div>
-              </div>
-              <div className="col-md-5 ps-4 pe-5" data-aos="fade-left">
-                <div className="similar_content">
-                  <h2>Insurance Plans for SME</h2>
-                  <p>
-                    Secure what matters the most to you! Over the last decade,
-                    SME’s have emerged to be the backbone of the Indian economy.
-                    They are one of the largest contributors in India’s surging
-                    socio-economic development. Sustaining in the SME sector, be
-                    it as an experienced business owner or an entrepreneur, is a
-                    great responsibility. Read more...
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="plan_offring comman_padding">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12" data-aos="fade-up">
-                <div className="comman_head text-center">
-                  <h2>Our SME Plan Offering</h2>
-                  <p>Savings plan that guarantees payout at maturity</p>
-                </div>
-              </div>
-              <div className="col-12">
-                <div className="row planoffring_main">
-                  <div
-                    className="col-md-4 d-flex align-items-stretch plancol"
-                    data-aos="fade-up"
-                  >
-                    <div className="planoffring_box">
-                      <span className="plan_offricon">
-                        <img src="/assets/img/plan-icon1.png" alt="i" />
-                      </span>
-                      <h3>
-                        Option to choose from multiple premium payment
-                        frequencies
-                      </h3>
-                      <p>
-                        Lorem Ipsum&nbsp;is simply dummy text of the printing
-                        and typesetting industry.
-                      </p>
-                      <a href="javascript:;">Read More</a>
-                    </div>
-                  </div>
-                  <div
-                    className="col-md-4 d-flex align-items-stretch plancol"
-                    data-aos="fade-up"
-                  >
-                    <div className="planoffring_box">
-                      <span className="plan_offricon">
-                        <img src="/assets/img/plan-icon2.png" alt="i" />
-                      </span>
-                      <h3>Entry age upto 60 years</h3>
-                      <p>
-                        Lorem Ipsum&nbsp;is simply dummy text of the printing
-                        and typesetting industry.
-                      </p>
-                      <a href="javascript:;">Read More</a>
-                    </div>
-                  </div>
-                  <div
-                    className="col-md-4 d-flex align-items-stretch plancol"
-                    data-aos="fade-up"
-                  >
-                    <div className="planoffring_box">
-                      <span className="plan_offricon">
-                        <img src="/assets/img/plan-icon3.png" alt="i" />
-                      </span>
-                      <h3>
-                        Enjoy higher maturity payout on survival for higher
-                        premiums
-                      </h3>
-                      <p>
-                        Lorem Ipsum&nbsp;is simply dummy text of the printing
-                        and typesetting industry.
-                      </p>
-                      <a href="javascript:;">Read More</a>
-                    </div>
-                  </div>
+                  <img src="/assets/img/sme_imgg.jpg" alt />
                 </div>
               </div>
             </div>
@@ -4400,225 +4309,10 @@ const SmePlan = () => {
                           <p>index.Maximum Dental Benefit Point 3</p>
                         </li>
                       </ul>
-                      <a className="plan_btn" href="get-quote.html">
-                        Quotation Request
+                      <a className="plan_btn" href="javascript:;">
+                        Get Insured{" "}
                       </a>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="smse_how">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-md-12" data-aos="fade-up">
-                <div className="comman_head text-center">
-                  <h2>The Why, What and How of SME Plans</h2>
-                  <p>All you need to know about SME Plans</p>
-                </div>
-              </div>
-              <div className="col-xl-8">
-                <div className="row justify-content-between">
-                  <div className="col-md-6 mb-5 pe-md-5" data-aos="fade-up">
-                    <a href="javascript:;" className="smsehow_box">
-                      <div className="smsehow_img">
-                        <img src="/assets/img/smse1.png" alt="star" />
-                      </div>
-                      <h3>
-                        Life may not be in your control, finances can! Say Hello
-                        to Life with Aviva! For the plans you
-                      </h3>
-                    </a>
-                  </div>
-                  <div className="col-md-6 mb-5 ps-md-5" data-aos="fade-up">
-                    <a href="javascript:;" className="smsehow_box">
-                      <div className="smsehow_img">
-                        <img src="/assets/img/smse2.png" alt="star" />
-                      </div>
-                      <h3>
-                        Hello 2024, Hello Life! Advent of new year will follow -
-                        new aspirations, dreams, rewards,
-                      </h3>
-                    </a>
-                  </div>
-                  <div className="col-md-6 mb-5 pe-md-5" data-aos="fade-up">
-                    <a href="javascript:;" className="smsehow_box">
-                      <div className="smsehow_img">
-                        <img src="/assets/img/smse3.png" alt="star" />
-                      </div>
-                      <h3>
-                        How to stay 'Happy' despite life's surprises? Life is
-                        nothing but a series of uncertainties,{" "}
-                      </h3>
-                    </a>
-                  </div>
-                  <div className="col-md-6 mb-5 ps-md-5" data-aos="fade-up">
-                    <a href="javascript:;" className="smsehow_box">
-                      <div className="smsehow_img">
-                        <img src="/assets/img/smse4.png" alt="star" />
-                      </div>
-                      <h3>
-                        Deciphering Insurance Jargons: From 'Riders' to
-                        'Endorsements'
-                      </h3>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="Testimonials">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-5" data-aos="fade-right">
-                <div className="Testimonials_left">
-                  <h2>
-                    What Our <br />
-                    Client Say’s
-                  </h2>
-                  <p>
-                    development. Sustaining in the SME sector, be it as an
-                    experienced business owner or an entrepreneur, is a great
-                    responsibility.
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-7">
-                <div className="row">
-                  <div className="col-md-6">
-                    <a
-                      href="javascript:;"
-                      className="testi_box mb-4"
-                      data-aos="fade-up"
-                    >
-                      <p>
-                        “ dd an excerpt from your personal biography, or simply
-                        let the world know who you are and what you have to
-                        offer. Connect with your site visitor’s on a personal
-                        level and make sure that your site.
-                      </p>
-                      <div className="row align-items-center">
-                        <div className="col-auto">
-                          <div className="testi_pic">
-                            <img src="/assets/img/client1.png" alt="star" />
-                          </div>
-                        </div>
-                        <div className="col ps-0">
-                          <div className="testi_details">
-                            <h3>Cincinnati</h3>
-                            <span>Cincinnati</span>
-                            <div className="raing d-flex align-items-center">
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      href="javascript:;"
-                      className="testi_box"
-                      data-aos="fade-up"
-                    >
-                      <p>
-                        “ dd an excerpt from your personal biography, or simply
-                        let the world know who you are and what you have to
-                        offer. Connect with your site visitor’s on a personal
-                        level and make sure that your site.
-                      </p>
-                      <div className="row align-items-center">
-                        <div className="col-auto">
-                          <div className="testi_pic">
-                            <img src="/assets/img/client2.png" alt="star" />
-                          </div>
-                        </div>
-                        <div className="col ps-0">
-                          <div className="testi_details">
-                            <h3>Cincinnati</h3>
-                            <span>Cincinnati</span>
-                            <div className="raing d-flex align-items-center">
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                  <div className="col-md-6 mt-md-5 mt-4">
-                    <a
-                      href="javascript:;"
-                      className="testi_box mb-4"
-                      data-aos="fade-up"
-                    >
-                      <p>
-                        “ dd an excerpt from your personal biography, or simply
-                        let the world know who you are and what you have to
-                        offer. Connect with your site visitor’s on a personal
-                        level and make sure that your site.
-                      </p>
-                      <div className="row align-items-center">
-                        <div className="col-auto">
-                          <div className="testi_pic">
-                            <img src="/assets/img/client3.png" alt="star" />
-                          </div>
-                        </div>
-                        <div className="col ps-0">
-                          <div className="testi_details">
-                            <h3>Cincinnati</h3>
-                            <span>Cincinnati</span>
-                            <div className="raing d-flex align-items-center">
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      href="javascript:;"
-                      className="testi_box"
-                      data-aos="fade-up"
-                    >
-                      <p>
-                        “ dd an excerpt from your personal biography, or simply
-                        let the world know who you are and what you have to
-                        offer. Connect with your site visitor’s on a personal
-                        level and make sure that your site.
-                      </p>
-                      <div className="row align-items-center">
-                        <div className="col-auto">
-                          <div className="testi_pic">
-                            <img src="/assets/img/client4.png" alt="star" />
-                          </div>
-                        </div>
-                        <div className="col ps-0">
-                          <div className="testi_details">
-                            <h3>Cincinnati</h3>
-                            <span>Cincinnati</span>
-                            <div className="raing d-flex align-items-center">
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                              <img src="/assets/img/Star.png" alt="star" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </a>
                   </div>
                 </div>
               </div>

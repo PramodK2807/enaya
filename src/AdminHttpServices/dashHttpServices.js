@@ -307,3 +307,139 @@ export async function GetPolicyInfo(formData) {
     return { error };
   }
 }
+export async function GetMemberDeailsToRaiseComplaint(formData) {
+  try {
+    const { data } = await mainHttpService.post(
+      `${process.env.REACT_APP_OURAPI}/Complaints/GetMemberDeailsToRaiseComplaint`,
+      formData
+    );
+    if (data && data?.StatusCode === "F") {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    return { error };
+  }
+}
+export async function GetSubCategory(formData) {
+  try {
+    const { data } = await mainHttpService.post(
+      `${process.env.REACT_APP_OURAPI}/Complaints/GetSubCategory`,
+      formData
+    );
+    if (data && data?.StatusCode === "F") {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    return { error };
+  }
+}
+export async function AddNewComplaints(formData) {
+  try {
+    const { data } = await mainHttpService.post(
+      `${process.env.REACT_APP_OURAPI}/Complaints/AddComplaint`,
+      formData
+    );
+    if (data && data?.StatusCode === "F") {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    return { error };
+  }
+}
+export async function ComplaintsList(formData) {
+  try {
+    const { data } = await mainHttpService.post(
+      `${process.env.REACT_APP_OURAPI}/Complaints/ListOfComplaints`,
+      formData
+    );
+    if (data && data?.StatusCode === "F") {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    return { error };
+  }
+}

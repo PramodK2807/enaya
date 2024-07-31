@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import './App.css'
+import "./App.css";
 import Home from "./Components/Home/Home";
 import BrokerPortal from "./Components/OurServices/BrokerPortal";
 import Endorse from "./Components/OurServices/Endorse";
@@ -27,6 +27,8 @@ import SelectYourAccount from "./Components/Auth/SelectYourAccount";
 import ClaimManagement from "./Components/ClaimManagement/ClaimManagement";
 import NewClaim from "./Components/ClaimManagement/NewClaim";
 import PolicyInfo from "./Components/Profile/PolicyInfo";
+import VisitVisa from "./Components/OurProducts/Individual/VisitVisa";
+import RegisterComplaint from "./Components/ContactUs/RegisterComplaint";
 
 function App() {
   return (
@@ -37,6 +39,7 @@ function App() {
 
       <Route exact path="/sme-plan" element={<SmePlan />} />
       <Route exact path="/corporate-plan" element={<CorporatePlan />} />
+      <Route exact path="/visa-services" element={<VisitVisa />} />
       <Route
         exact
         path="/our-services/broker-portal"
@@ -56,6 +59,11 @@ function App() {
       <Route exact path="/investor-relation" element={<InvestorRelation />} />
       <Route exact path="/contact-us/report-fraud" element={<ReportFraud />} />
       <Route exact path="/contact-us/faq" element={<Faq />} />
+      <Route
+        exact
+        path="/contact-us/register-complaints"
+        element={<RegisterComplaint />}
+      />
       <Route exact path="/about-us" element={<AboutUs />} />
       <Route exact path="/profile" element={<MyProfile />} />
       <Route exact path="/edit-profile" element={<EditProfile />} />
@@ -70,7 +78,11 @@ function App() {
       <Route exact path="/claim-management/add-new" element={<NewClaim />} />
       <Route exact path="/provide-network" element={<ProvideNetwork />} />
       <Route exact path="/network-provider" element={<NetworkProvider />} />
-      <Route exact path="/select-your-account" element={<SelectYourAccount />} />
+      <Route
+        exact
+        path="/select-your-account"
+        element={<SelectYourAccount />}
+      />
     </Routes>
   );
 }

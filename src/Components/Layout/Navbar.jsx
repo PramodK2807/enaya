@@ -40,8 +40,8 @@ const Navbar = () => {
                             <a href="javascript:;">Individual </a>
                             <div className="Productsmenu">
                               <div className="megadropdown_menus">
-                                <a href="javascript:;">Visit Visa</a>
-                                <a href="javascript:;">Tourist Visa</a>
+                                <Link to={"/visa-services"}>Visit Visa</Link>
+                                <Link to={"/visa-services"}>Tourist Visa</Link>
                               </div>
                             </div>
                           </div>
@@ -78,6 +78,7 @@ const Navbar = () => {
                       <div className="row ">
                         <div className="col-12">
                           <div className="megadropdown_menus">
+                            <Link to="/claim-management">Add Claims</Link>
                             <Link to="/our-services/broker-portal">
                               Broker Portal
                             </Link>
@@ -122,9 +123,9 @@ const Navbar = () => {
                       <div className="row ">
                         <div className="col-12">
                           <div className="megadropdown_menus">
-                            <a href="javascript:;">
+                            <Link to={"/contact-us/register-complaints"}>
                               Make an Inquiry &amp; Complaint
-                            </a>
+                            </Link>
                             <Link to="/contact-us/report-fraud">
                               Report Fraud and Abuse
                             </Link>

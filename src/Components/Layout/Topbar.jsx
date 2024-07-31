@@ -1,9 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import SecureLS from "secure-ls";
+
+const ls = new SecureLS();
 
 const Topbar = () => {
   const userData = useSelector((state) => state?.user?.userData);
+  let token = ls.get('enaya-token');
   return (
     <>
       <div className="top_header">
@@ -88,12 +92,12 @@ const Topbar = () => {
                   </form>
                 </div>
                 <div className="col-auto">
-                  {userData && (
+                  {token && (
                     <Link to={"/profile"}>
                       <img src="/assets/img/account.png" alt="" />
                     </Link>
                   )}
-                  {!userData && (
+                  {!token && (
                     <Link to={"/login"}>
                       <img src="/assets/img/account.png" alt="" />
                     </Link>

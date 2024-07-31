@@ -3,6 +3,7 @@ import Layout from "../Layout/Layout";
 import {
   adminLogin,
   ForgotPasswordApi,
+  ResetPassword,
   SendOtp,
   VerifyOtp,
 } from "../../AdminHttpServices/LoginHttpsService";
@@ -11,16 +12,25 @@ import { addCardDetails, addUserInfo } from "../../app/slice/userInfoSlice";
 import SecureLS from "secure-ls";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
   const [identityNumber, setIdentityNumber] = useState("2346518455");
   const [password, setPassword] = useState("12345");
   const [forgotPassApiData, setForgotPassApiData] = useState();
   const [visible, setVisible] = useState(true);
+  const [visible2, setVisible2] = useState(true);
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const inputs = useRef([]);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
 
   const userLogin = async (e) => {
     let ls = new SecureLS();
@@ -100,38 +110,44 @@ const Login = () => {
   };
 
   const handleVerifyOTP = async () => {
-    try {
-      let { data } = await VerifyOtp({
-        IdentityNo: identityNumber,
-        OTPId: forgotPassApiData?.OTPId,
-        OTP: otp,
-      });
+    document.getElementById("otpModalClose").click();
+    const resetPasswordModal = document.getElementById("resetpassword");
+    const resetPasswordBootstrapModal = new window.bootstrap.Modal(
+      resetPasswordModal
+    );
+    resetPasswordBootstrapModal.show();
+    // try {
+    //   let { data } = await VerifyOTPToRestPassword({
+    //     IdentityNo: identityNumber,
+    //     OTPId: forgotPassApiData?.OTPId,
+    //     OTP: otp,
+    //   });
 
-      if (data && data?.StatusCode === "S") {
-        document.getElementById("otpModalClose").click();
-        const resetPasswordModal = document.getElementById("resetpassword");
-        const resetPasswordBootstrapModal = new window.bootstrap.Modal(
-          resetPasswordModal
-        );
-        resetPasswordBootstrapModal.show();
-        Swal.fire({
-          toast: true,
-          icon: "success",
-          position: "top-end",
-          title: "OTP Verified",
-          showConfirmButton: false,
-          timerProgressBar: true,
-          timer: 3000,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //   if (data && data?.StatusCode === "S") {
+    //     document.getElementById("otpModalClose").click();
+    //     const resetPasswordModal = document.getElementById("resetpassword");
+    //     const resetPasswordBootstrapModal = new window.bootstrap.Modal(
+    //       resetPasswordModal
+    //     );
+    //     resetPasswordBootstrapModal.show();
+    //     Swal.fire({
+    //       toast: true,
+    //       icon: "success",
+    //       position: "top-end",
+    //       title: "OTP Verified",
+    //       showConfirmButton: false,
+    //       timerProgressBar: true,
+    //       timer: 3000,
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
-  const handleChangePassword = async () => {
+  const handleResetPassword = async () => {
     try {
-      let { data } = await SendOtp({
+      let { data } = await ResetPassword({
         IdentityNo: identityNumber,
         // MobileNo: phoneNumber ?? "",
       });
@@ -139,7 +155,9 @@ const Login = () => {
       console.log(error);
     }
   };
-
+  const validateConfirmPassword = (value) => {
+    return value === watch("password") || "Your password does not match";
+  };
   return (
     <Layout showFooter={false}>
       <section
@@ -314,25 +332,85 @@ const Login = () => {
                   <h2>Reset Password</h2>
                   <p>Make sure you not use your previous password</p>
                 </div>
-                <form className="automodal_form form_desig row" action="#">
-                  <div className="form-group col-12">
+                <form
+                  className="automodal_form form_desig row"
+                  onSubmit={handleSubmit(handleResetPassword)}
+                >
+                  <div className="form-group col-md-12 position-relative">
                     <input
-                      className="form-control shadow-none"
-                      type="text"
-                      placeholder="New Password"
+                      className={`form-control ${
+                        errors.password ? "is-invalid" : ""
+                      }`}
+                      type={visible ? "text" : "password"}
+                      placeholder="Password"
+                      {...register("password", {
+                        required: "* Please Enter Your Password",
+                        pattern: {
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          message:
+                            "* Minimum 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                        },
+                      })}
                     />
+                    <div
+                      onClick={() => setVisible(!visible)}
+                      className="eyebtn cursor_pointer"
+                    >
+                      {visible ? (
+                        <img src="/assets/img/eye.png" alt="i" />
+                      ) : (
+                        <img
+                          height={16}
+                          width={16}
+                          src="/assets/img/hide.png"
+                          alt="i"
+                        />
+                      )}
+                    </div>
+                    {errors.password && (
+                      <div className="invalid-feedback">
+                        {errors.password.message}
+                      </div>
+                    )}
                   </div>
-                  <div className="form-group col-12">
+                  <div className="form-group col-md-12 position-relative">
                     <input
-                      className="form-control shadow-none"
-                      type="text"
-                      placeholder="Confirm New Password"
+                      className={`form-control ${
+                        errors.cpassword ? "is-invalid" : ""
+                      }`}
+                      type={visible2 ? "text" : "password"}
+                      placeholder="Confirm Password"
+                      {...register("cpassword", {
+                        required: "* Please Enter Your Confirm Password",
+                        validate: validateConfirmPassword,
+                      })}
                     />
+                    <div
+                      onClick={() => setVisible2(!visible2)}
+                      className="eyebtn cursor_pointer"
+                    >
+                      {visible2 ? (
+                        <img src="/assets/img/eye.png" alt="i" />
+                      ) : (
+                        <img
+                          height={16}
+                          width={16}
+                          src="/assets/img/hide.png"
+                          alt="i"
+                        />
+                      )}
+                    </div>
+                    {errors.cpassword && (
+                      <div className="invalid-feedback">
+                        {errors.cpassword.message}
+                      </div>
+                    )}
                   </div>
                   <div className="form-group col-12 text-center mt-2">
-                    <a href="javascript:;" className="form_btns">
+                    <button type="submit" className="form_btns">
                       Set New Password
-                    </a>
+                    </button>
                   </div>
                 </form>
               </div>

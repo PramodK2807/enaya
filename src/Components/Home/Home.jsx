@@ -3,6 +3,7 @@ import Layout from "../Layout/Layout";
 import Banner from "./Banner";
 import OnlineServices from "./OnlineServices";
 import OurMobileApp from "./OurMobileApp";
+import { Link } from "react-router-dom";
 
 
 const Home = () => {
@@ -27,10 +28,10 @@ const Home = () => {
                   specifically for small and medium enterprises, ensuring your
                   business and employees are well-protected.
                 </p>
-                <a className="link_part" href="smeplan.html">
+                <Link to={'/sme-plan'} className="link_part" href="smeplan.html">
                   Learn More
                   <img src="/assets/img/arrow.png" alt />
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -44,10 +45,10 @@ const Home = () => {
                   businesses, ensuring comprehensive protection for your company
                   and employees.
                 </p>
-                <a className="link_part" href="corporate-plan.html">
+                <Link to={'/corporate-plan'} className="link_part" href="corporate-plan.html">
                   Learn More
                   <img src="/assets/img/arrow.png" alt />
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-md-7" data-aos="fade-left">

@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Layout from "../Layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { Registration } from "../../AdminHttpServices/LoginHttpsService";
+import {
+  Registration,
+  VerifyOtp,
+} from "../../AdminHttpServices/LoginHttpsService";
 
 const Register = () => {
   const [step, setStep] = useState(1);
+  const [identityNo, setIdentityNo] = useState("");
+  const [OTPId, setOTPId] = useState("");
   const [visible, setVisible] = useState(true);
   const [tnc, setTnc] = useState(false);
-
-  const navigate = useNavigate();
+  const [otp, setOtp] = useState("");
+  const inputs = useRef([]);
 
   const {
     register,
@@ -52,8 +57,11 @@ const Register = () => {
           timerProgressBar: true,
           timer: 3000,
         });
+        setIdentityNo(info?.identityNumber?.trim());
+        setOTPId(data?.OTPId);
+        setStep(2);
         document.getElementById("reset").click();
-        navigate("/login");
+        // navigate("/login");
       }
     } catch (error) {
       Swal.fire({
@@ -65,6 +73,57 @@ const Register = () => {
         timerProgressBar: true,
         timer: 3000,
       });
+    }
+  };
+
+  const handleInputChange = (e, index) => {
+    const value = e.target.value;
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp.join(""));
+
+    if (value.length === 1) {
+      if (index < inputs.current.length - 1) {
+        inputs.current[index + 1].focus();
+      }
+    } else if (value.length > 1) {
+      e.target.value = value.charAt(0);
+      if (index < inputs.current.length - 1) {
+        inputs.current[index + 1].focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && e.target.value === "") {
+      if (index > 0) {
+        inputs.current[index - 1].focus();
+      }
+    }
+  };
+
+  const handleVerifyOTP = async () => {
+    try {
+      let { data } = await VerifyOtp({
+        IdentityNo: identityNo,
+        OTPId: OTPId,
+        OTP: otp,
+      });
+
+      if (data && data?.StatusCode === "S") {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "OTP Verified",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        setStep(3)
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -268,7 +327,50 @@ const Register = () => {
         </section>
       )}
 
+      {/* VERIFY OTP */}
+
       {step === 2 && (
+        <div className="row px-4 py-5 align-items-center justify-content-center">
+          <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div className="text-center">
+              <h3>Please verify your OTP</h3>
+              <p>OTP sent</p>
+            </div>
+            <form className="automodal_form row" action="#">
+              <div className="form-group otp_box mb-4 d-flex align-items-center justify-content-between col-12">
+                {Array(5)
+                  .fill(0)
+                  .map((_, index) => (
+                    <input
+                      key={index}
+                      className="form-control shadow-none no-spinners"
+                      type="number"
+                      maxLength={1}
+                      ref={(el) => (inputs.current[index] = el)}
+                      onChange={(e) => handleInputChange(e, index)}
+                      onKeyDown={(e) => handleKeyDown(e, index)}
+                    />
+                  ))}
+              </div>
+
+              <div className="form-group col-12 text-center mt-2">
+                <button
+                  type="button"
+                  onClick={handleVerifyOTP}
+                  className="form_btns"
+                >
+                  Continue
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+
+      {/* GREETS */}
+
+      {step === 3 && (
         <section className="successfully_page">
           <div className="container">
             <div className="row">

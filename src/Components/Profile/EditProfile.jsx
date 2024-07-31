@@ -2,13 +2,25 @@ import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import ProfileModal from "./ProfileModal";
 import { useLocation } from "react-router-dom";
-import { UpdateProfileDetails } from "../../AdminHttpServices/LoginHttpsService";
+import {
+  UpdatePassword,
+  UpdateProfileDetails,
+} from "../../AdminHttpServices/LoginHttpsService";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 const EditProfile = () => {
   const profileData = useSelector((state) => state?.user?.userData);
+  const [visible, setVisible] = useState(true);
+  const [visible2, setVisible2] = useState(true);
+
+  const {
+    register: register2,
+    handleSubmit: handleSubmit2,
+    formState: { errors: errors2 },
+  } = useForm({ mode: "onChange" });
+
   const { state } = useLocation();
 
   const {
@@ -60,6 +72,32 @@ const EditProfile = () => {
     }
   };
 
+  const handleChangePass = async (info) => {
+    console.log(info);
+    try {
+      let { data } = await UpdatePassword({
+        IdentityNo: profileData?.InsuranceNumber,
+        PolicyNo: profileData?.PolicyNo,
+        MemberNo: profileData?.Memberno,
+        OldPassword: info?.password,
+        NewPassWord: info?.newPassword,
+      });
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Password updated",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Layout>
       <>
@@ -69,11 +107,25 @@ const EditProfile = () => {
             <div className="row">
               <div className="col-md-12 mb-lg-4 mb-md-3 mb-3">
                 <div className="row info_head align-items-center mb-md-3">
-                  <div className="col d-flex align-items-center">
-                    <a href="javascript:;">
-                      <img src="/assets/img/arrow-left1.png" alt="i" />
-                    </a>
-                    <h2>Edit My Profile</h2>
+                  <div className="col d-flex align-items-center justify-content-between">
+                    <div className="d-flex align-items-center">
+                      <a href="javascript:;">
+                        <img src="/assets/img/arrow-left1.png" alt="i" />
+                      </a>
+                      <h2>Edit My Profile</h2>
+                    </div>
+                    <div>
+                      <a
+                        data-bs-toggle="modal"
+                        data-bs-target="#forgotpassword"
+                        className="forgotpassword mt-0"
+                        alt="i"
+                        type="button"
+                        // onClick={handleForgotPassword}
+                      >
+                        Change Password
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -240,6 +292,121 @@ const EditProfile = () => {
                         </button>
                       </div>
                     </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="modal fade auth_modal"
+          id="forgotpassword"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex={-1}
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id="otpModalClose"
+                />
+                <div className="authmodal_head">
+                  <img src="/assets/img/mobilee.png" alt />
+                  <h2>Change your password</h2>
+                  <p>Enter your Old password & New password to change</p>
+                </div>
+                <form
+                  className="form_desig row"
+                  onSubmit={handleSubmit2(handleChangePass)}
+                >
+                  <div className="form-group col-md-12 position-relative">
+                    <input
+                      className={`form-control ${
+                        errors2.password ? "is-invalid" : ""
+                      }`}
+                      type={visible ? "text" : "password"}
+                      placeholder="Old Password"
+                      {...register2("password", {
+                        required: "* Please Enter Your Old Password",
+                        pattern: {
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          message:
+                            "* Minimum 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                        },
+                      })}
+                    />
+                    <div
+                      onClick={() => setVisible(!visible)}
+                      className="eyebtn cursor_pointer"
+                    >
+                      {visible ? (
+                        <img src="/assets/img/eye.png" alt="i" />
+                      ) : (
+                        <img
+                          height={16}
+                          width={16}
+                          src="/assets/img/hide.png"
+                          alt="i"
+                        />
+                      )}
+                    </div>
+                    {errors2.password && (
+                      <div className="invalid-feedback">
+                        {errors2.password.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="form-group col-md-12 position-relative">
+                    <input
+                      className={`form-control ${
+                        errors2.newPassword ? "is-invalid" : ""
+                      }`}
+                      type={visible2 ? "text" : "password"}
+                      placeholder="New Password"
+                      {...register2("newPassword", {
+                        required: "* Please Enter Your New Password",
+                        pattern: {
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          message:
+                            "* Minimum 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                        },
+                      })}
+                    />
+                    <div
+                      onClick={() => setVisible2(!visible2)}
+                      className="eyebtn cursor_pointer"
+                    >
+                      {visible2 ? (
+                        <img src="/assets/img/eye.png" alt="i" />
+                      ) : (
+                        <img
+                          height={16}
+                          width={16}
+                          src="/assets/img/hide.png"
+                          alt="i"
+                        />
+                      )}
+                    </div>
+                    {errors2.newPassword && (
+                      <div className="invalid-feedback">
+                        {errors2.newPassword.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="form-group col-12 text-center mt-2">
+                    <button type="submit" className="form_btns">
+                      Update Password
+                    </button>
                   </div>
                 </form>
               </div>
