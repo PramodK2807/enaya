@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import SecureLS from "secure-ls";
 import { NotificationList } from "../../AdminHttpServices/dashHttpServices";
+import Swal from "sweetalert2";
+import {
+  adminLogin,
+  ForgotPasswordApi,
+  ResetPassword,
+  VerifyOTPToRestPassword,
+} from "../../AdminHttpServices/LoginHttpsService";
+import { addCardDetails, addUserInfo } from "../../app/slice/userInfoSlice";
+import { useForm } from "react-hook-form";
 
 const ls = new SecureLS();
 
@@ -10,7 +19,45 @@ const Topbar = () => {
   const userData = useSelector((state) => state?.user?.userData);
   const [showModal, setShowModal] = useState(false);
   const [notification, setNotification] = useState([]);
+  const navigate = useNavigate();
   let token = ls.get("enaya-token");
+
+  const [identityNumber, setIdentityNumber] = useState("2346518455");
+  const [password, setPassword] = useState("12345");
+  const [visible, setVisible] = useState(true);
+  const dispatch = useDispatch();
+
+  const userLogin = async (e) => {
+    let ls = new SecureLS();
+    e.preventDefault();
+    try {
+      const payload = {
+        IdentityNo: identityNumber?.trim(),
+        Password: password.trim(),
+        deviceOS: "Web",
+        fcmToken: "",
+      };
+      let { data } = await adminLogin(payload);
+      if (data && !data?.error) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "Login successfully",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        document.getElementById("closeLoginModal").click();
+        await dispatch(addUserInfo(data?.CardDetails[0]));
+        await dispatch(addCardDetails(data?.CardDetails));
+        navigate("/profile");
+        ls.set("enaya-token", data?.token);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -33,6 +80,11 @@ const Topbar = () => {
     }
   };
 
+  const handleLogout = () => {
+    ls.remove("enaya-token");
+    navigate("/login");
+  };
+
   return (
     <>
       <div className="top_header">
@@ -40,7 +92,7 @@ const Topbar = () => {
           <div className="row align-items-center">
             <div className="col-12">
               <div className="row justify-content-lg-end justify-content-md-center justify-content-between align-items-center">
-                <div className="col-auto pe-4">
+                {/* <div className="col-auto pe-4">
                   <div className="dropdown languages_dropdown">
                     <button
                       className="btn btn-secondary"
@@ -99,7 +151,7 @@ const Topbar = () => {
                       </form>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="col-auto d-md-block d-none">
                   <form className="search_form" action="#">
                     <div className="form-group position-relative">
@@ -118,74 +170,140 @@ const Topbar = () => {
                 </div>
                 <div className="col-auto d-flex align-items-center">
                   {token && (
-                    <Link to={"/profile"}>
-                      <img src="/assets/img/account.png" alt="" />
-                    </Link>
-                  )}
-                  {!token && (
-                    <Link to={"/login"}>
-                      <img src="/assets/img/account.png" alt="" />
-                    </Link>
-                  )}
+                    <div className="container">
+                      <div className="text-end">
+                        <div className="dropdown">
+                          <button
+                            className="btn d-flex align-items-center myaccount_part "
+                            style={{ outline: "none" }}
+                            type="button"
+                            id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <img src="/assets/img/account.png" alt="" />{" "}
+                            <span className="text-white text-nowrap">
+                              My Account
+                            </span>
+                          </button>
+                          <ul
+                            className="dropdown-menu"
+                            aria-labelledby="dropdownMenuButton1"
+                          >
+                            <li>
+                              <Link className="dropdown-item" to="/profile">
+                                Profile
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                className="dropdown-item"
+                                to="/contact-us/faq"
+                              >
+                                FAQs
+                              </Link>
+                            </li>
 
-                  <div className="">
-                    <button
-                      onClick={() => setShowModal(!showModal)}
-                      style={{ border: "none", background: "none" }}
-                    >
-                      <img
-                        height={20}
-                        width={20}
-                        style={{
-                          border: "2px solid #cae4d7",
-                          borderRadius: "50%",
-                          padding: "3px",
-                        }}
-                        src="/assets/img/bell.png"
-                        alt=""
-                      />
-                    </button>
-
-                    <div
-                      className={`notification_modal overflow-auto ${
-                        showModal ? "show" : ""
-                      }`}
-                    >
-                      <div className="d-flex rounded align-items-center justify-content-between bg-light px-3 py-2">
-                        <h4>Notifications</h4>
-                        <div
-                          onClick={() => setShowModal(false)}
-                          className="cursor_pointer"
-                        >
-                          <img
-                            className="cut"
-                            src="/assets/img/cut.png"
-                            alt="Remove"
-                          />
+                            <li onClick={() => setShowModal(!showModal)}>
+                              <button className="dropdown-item" to="/">
+                                Notifications
+                              </button>
+                            </li>
+                            <li>
+                              <Link className="dropdown-item" to="/about-us">
+                                About US
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                className="dropdown-item"
+                                to="/terms-and-conditions"
+                              >
+                                Terms &amp; Condition
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                className="dropdown-item"
+                                to="/privacy-policy"
+                              >
+                                Privacy Policy
+                              </Link>
+                            </li>
+                            {/* <li>
+                              <Link
+                                className="dropdown-item"
+                                to="/help-&-support"
+                              >
+                                Help &amp; Support
+                              </Link>
+                            </li> */}
+                            <li>
+                              <button
+                                className="dropdown-item"
+                                // to-bs-toggle="modal"
+                                // data-bs-target="#logout_modal"
+                                onClick={handleLogout}
+                              >
+                                Logout
+                              </button>
+                            </li>
+                          </ul>
                         </div>
                       </div>
-
-                      {notification && notification?.length > 0 ? (
-                        notification?.map((item, i) => (
-                          <>
-                            <div className="row align-items-center bg-light my-2 px-0 mx-0">
-                              <div className="col-2">
-                                <img
-                                  src="/assets/img/favicon.png"
-                                  className="w-100 h-100"
-                                  alt=""
-                                />
-                              </div>
-                              <div className="col-10">
-                               {item?.Notification}
-                              </div>
-                            </div>
-                          </>
-                        ))
-                      ) : (
-                        <p className="text-center">No notifications found</p>
-                      )}
                     </div>
+                  )}
+
+                  {!token && (
+                    <div class="col-auto">
+                      <a
+                        class="myaccount_part"
+                        data-bs-toggle="modal"
+                        data-bs-target="#MyAccount"
+                        href="javascript:;"
+                      >
+                        <img src="assets/img/account.png" alt="" /> My Account
+                      </a>
+                    </div>
+                  )}
+
+                  <div
+                    className={`notification_modal overflow-auto ${
+                      showModal ? "show" : ""
+                    }`}
+                  >
+                    <div className="d-flex rounded align-items-center justify-content-between bg-light px-3 py-2">
+                      <h4>Notifications</h4>
+                      <div
+                        onClick={() => setShowModal(false)}
+                        className="cursor_pointer"
+                      >
+                        <img
+                          className="cut"
+                          src="/assets/img/cut.png"
+                          alt="Remove"
+                        />
+                      </div>
+                    </div>
+
+                    {notification && notification?.length > 0 ? (
+                      notification?.map((item, i) => (
+                        <>
+                          <div className="row align-items-center bg-light my-2 px-0 mx-0">
+                            <div className="col-2">
+                              <img
+                                src="/assets/img/favicon.png"
+                                className="w-100 h-100"
+                                alt=""
+                              />
+                            </div>
+                            <div className="col-10">{item?.Notification}</div>
+                          </div>
+                        </>
+                      ))
+                    ) : (
+                      <p className="text-center">No notifications found</p>
+                    )}
                   </div>
                 </div>
                 {/* <div className="col-auto">
@@ -221,6 +339,7 @@ const Topbar = () => {
                 className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
+                id="closeLoginModal"
               />
               <div className="row mx-0">
                 <div className="col-lg-6 px-0">
@@ -232,25 +351,76 @@ const Topbar = () => {
                         Tristique arcu a nisi, semper. Ut cras odio ac sem ac.
                       </p>
                     </div>
-                    <form className="row" action="#">
-                      <div className="col-12 form-group mb-3">
+                    <form className="form_desig row" action="#">
+                      <div className="form-floating col-md-12">
                         <input
-                          type="text"
                           className="form-control"
-                          placeholder="National ID/Iqama ID"
+                          type="text"
+                          placeholder="National ID"
+                          onChange={(e) => setIdentityNumber(e.target.value)}
+                          value={identityNumber}
                         />
+                        <label htmlFor="floatingInput">
+                          National ID/Iqama ID
+                        </label>
                       </div>
-                      <div className="col-12 form-group mb-4">
+                      <div className="form-floating col-md-12 position-relative">
                         <input
-                          type="text"
                           className="form-control"
-                          placeholder="Policy Number"
+                          type={visible ? "password" : "text"}
+                          placeholder="Password"
+                          onChange={(e) => setPassword(e.target.value)}
+                          value={password}
                         />
+                        <label htmlFor="floatingInput">Password</label>
+                        <div
+                          onClick={() => setVisible(!visible)}
+                          className="eyebtn cursor_pointer"
+                        >
+                          {visible && <img src="/assets/img/eye.png" alt="i" />}
+                          {!visible && (
+                            <img
+                              height={16}
+                              width={16}
+                              src="/assets/img/hide.png"
+                              alt="i"
+                            />
+                          )}
+                        </div>
                       </div>
-                      <div className="col-12 form-group mb-0">
-                        <a className="login_btnn" href="javascript:;">
-                          Accept and Login
-                        </a>
+                      {/* <div className="form-group col-md-12 position-relative d-flex justify-content-between">
+                        <div>
+                          <a
+                            data-bs-toggle="modal"
+                            data-bs-target="#forgotpassword"
+                            className="forgotpassword mt-0"
+                            alt="i"
+                            type="button"
+                            onClick={handleForgotPassword}
+                          >
+                            Forgot Password?
+                          </a>
+                        </div>
+                        <div className="form-group text-center">
+                          <div className="">
+                            Don't have an account?{" "}
+                            <Link
+                              to={"/register-user"}
+                              className="blue_text fw-bold"
+                            >
+                              Sign Up
+                            </Link>
+                          </div>
+                        </div>
+                      </div> */}
+                      <div className="form-group col-md-12">
+                        <button
+                          className="form_btns"
+                          type="submit"
+                          onClick={userLogin}
+                        >
+                          Accept & Log In
+                        </button>
                       </div>
                     </form>
                   </div>

@@ -39,9 +39,10 @@ function App() {
   }, [location]);
   return (
     <Routes>
+      <Route exact path="*" element={<Home />} />
       <Route exact path="/" element={<Home />} />
       <Route exact path="/register-user" element={<Register />} />
-      <Route exact path="/login" element={<Login />} />
+      {/* <Route exact path="/login" element={<Login />} /> */}
 
       <Route exact path="/sme-plan" element={<SmePlan />} />
       <Route exact path="/corporate-plan" element={<CorporatePlan />} />

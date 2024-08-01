@@ -55,17 +55,17 @@ const ClaimManagement = () => {
               </div>
             </div>
             <div className="col-md-12">
-              <div className="row claims_main align-items-center">
+              <div className="row claims_main align-items-start justify-content-start">
                 <div className="col-md-6 mb-3">
                   <div className="result_found">
                     {claimsList?.length} results found
                   </div>
                 </div>
-                <div className="col-md-6 mb-3 text-end">
+                {/* <div className="col-md-6 mb-3 text-end">
                   <a href="javascript:;" className="filter_btn">
                     Filter <img src="/assets/img/filter.png" alt="i" />
                   </a>
-                </div>
+                </div> */}
                 <div className="col-md-12">
                   <div className="row">
                     {claimsList && claimsList.length > 0 ? (

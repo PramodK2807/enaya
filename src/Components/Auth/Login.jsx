@@ -30,6 +30,7 @@ const Login = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
