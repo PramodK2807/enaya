@@ -149,32 +149,32 @@ const NewClaim = () => {
       console.log(error);
     }
   };
-
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files);
-    let totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
-
-    if (
-      files.length === 0 &&
-      newFiles.length === 1 &&
-      newFiles[0].size > 5 * 1024 * 1024
-    ) {
-      Swal.fire({
-        toast: true,
-        icon: "warning",
-        position: "top-end",
-        title: "Single file size exceeds 5MB limit",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      return;
-    }
-
-    const combinedFiles = [...files, ...newFiles];
-    totalFileSize += files.reduce((acc, file) => acc + file.size, 0);
-
-    if (combinedFiles.length > 1 && totalFileSize > 10 * 1024 * 1024) {
+    const currentFiles = files;
+    
+    // Calculate the total size of new files
+    let newFilesSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+  
+    // Check if any single new file exceeds the 5MB limit
+    // if (newFiles.some(file => file.size > 5 * 1024 * 1024)) {
+    //   Swal.fire({
+    //     toast: true,
+    //     icon: "warning",
+    //     position: "top-end",
+    //     title: "Single file size exceeds 5MB limit",
+    //     showConfirmButton: false,
+    //     timerProgressBar: true,
+    //     timer: 3000,
+    //   });
+    //   return;
+    // }
+  
+    // Calculate the total size if new files are added to existing files
+    let totalFileSize = currentFiles.reduce((acc, file) => acc + file.size, 0) + newFilesSize;
+  
+    // Check if the total size exceeds 10MB
+    if (totalFileSize > 10 * 1024 * 1024) {
       Swal.fire({
         toast: true,
         icon: "warning",
@@ -186,9 +186,63 @@ const NewClaim = () => {
       });
       return;
     }
-
-    setFiles(combinedFiles);
+  
+    // Check if the total number of files exceeds 5
+    if (currentFiles.length + newFiles.length > 5) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Maximum 5 files allowed",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    }
+  
+    // Update the files state
+    setFiles([...currentFiles, ...newFiles]);
   };
+  // const handleFileChange = (e) => {
+  //   const newFiles = Array.from(e.target.files);
+  //   let totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+
+  //   if (
+  //     files.length === 0 &&
+  //     newFiles.length === 1 &&
+  //     newFiles[0].size > 5 * 1024 * 1024
+  //   ) {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: "warning",
+  //       position: "top-end",
+  //       title: "Single file size exceeds 5MB limit",
+  //       showConfirmButton: false,
+  //       timerProgressBar: true,
+  //       timer: 3000,
+  //     });
+  //     return;
+  //   }
+
+  //   const combinedFiles = [...files, ...newFiles];
+  //   totalFileSize += files.reduce((acc, file) => acc + file.size, 0);
+
+  //   if (combinedFiles.length > 1 && totalFileSize > 10 * 1024 * 1024) {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: "warning",
+  //       position: "top-end",
+  //       title: "Total file size exceeds 10MB limit",
+  //       showConfirmButton: false,
+  //       timerProgressBar: true,
+  //       timer: 3000,
+  //     });
+  //     return;
+  //   }
+
+  //   setFiles(combinedFiles);
+  // };
 
   const removeFile = (index) => {
     const newFiles = files.filter((_, i) => i !== index);
@@ -531,7 +585,7 @@ const NewClaim = () => {
                         placeholder="Address"
                         onChange={handleFileChange}
                         multiple
-                        accept=".pdf"
+                        accept=".pdf, .png, .jpg, .jpeg"
                       />
                       <label htmlFor="v">
                         <img src="/assets/img/attech.png" alt="i" />

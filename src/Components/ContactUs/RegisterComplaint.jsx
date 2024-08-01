@@ -19,6 +19,7 @@ const RegisterComplaint = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
   const [files, setFiles] = useState([]);
+  const [listOfComplaints, setListOfComplaints] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,11 +28,18 @@ const RegisterComplaint = () => {
   }, []);
 
   const getComplaints = async () => {
-    let { data } = await ComplaintsList({
-      IdentityNo: userData?.InsuranceNumber,
-      PolicyNo: userData?.PolicyNo,
-      MemberNo: userData?.Memberno,
-    });
+    try {
+      let { data } = await ComplaintsList({
+        IdentityNo: userData?.InsuranceNumber,
+        PolicyNo: userData?.PolicyNo,
+        MemberNo: userData?.Memberno,
+      });
+      if (data && !data?.error) {
+        setListOfComplaints(data?.ComplaintsDetailsList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getSubCat = async (id) => {
@@ -65,32 +73,33 @@ const RegisterComplaint = () => {
       console.log(error);
     }
   };
-
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files);
-    let totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+    const currentFiles = files;
 
-    if (
-      files.length === 0 &&
-      newFiles.length === 1 &&
-      newFiles[0].size > 5 * 1024 * 1024
-    ) {
-      Swal.fire({
-        toast: true,
-        icon: "warning",
-        position: "top-end",
-        title: "Single file size exceeds 5MB limit",
-        showConfirmButton: false,
-        timerProgressBar: true,
-        timer: 3000,
-      });
-      return;
-    }
+    // Calculate the total size of new files
+    let newFilesSize = newFiles.reduce((acc, file) => acc + file.size, 0);
 
-    const combinedFiles = [...files, ...newFiles];
-    totalFileSize += files.reduce((acc, file) => acc + file.size, 0);
+    // Check if any single new file exceeds the 5MB limit
+    // if (newFiles.some(file => file.size > 5 * 1024 * 1024)) {
+    //   Swal.fire({
+    //     toast: true,
+    //     icon: "warning",
+    //     position: "top-end",
+    //     title: "Single file size exceeds 5MB limit",
+    //     showConfirmButton: false,
+    //     timerProgressBar: true,
+    //     timer: 3000,
+    //   });
+    //   return;
+    // }
 
-    if (combinedFiles.length > 1 && totalFileSize > 10 * 1024 * 1024) {
+    // Calculate the total size if new files are added to existing files
+    let totalFileSize =
+      currentFiles.reduce((acc, file) => acc + file.size, 0) + newFilesSize;
+
+    // Check if the total size exceeds 10MB
+    if (totalFileSize > 10 * 1024 * 1024) {
       Swal.fire({
         toast: true,
         icon: "warning",
@@ -103,8 +112,63 @@ const RegisterComplaint = () => {
       return;
     }
 
-    setFiles(combinedFiles);
+    // Check if the total number of files exceeds 5
+    if (currentFiles.length + newFiles.length > 5) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Maximum 5 files allowed",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    }
+
+    // Update the files state
+    setFiles([...currentFiles, ...newFiles]);
   };
+
+  // const handleFileChange = (e) => {
+  //   const newFiles = Array.from(e.target.files);
+  //   let totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
+
+  //   if (
+  //     files.length === 0 &&
+  //     newFiles.length === 1 &&
+  //     newFiles[0].size > 5 * 1024 * 1024
+  //   ) {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: "warning",
+  //       position: "top-end",
+  //       title: "Single file size exceeds 5MB limit",
+  //       showConfirmButton: false,
+  //       timerProgressBar: true,
+  //       timer: 3000,
+  //     });
+  //     return;
+  //   }
+
+  //   const combinedFiles = [...files, ...newFiles];
+  //   totalFileSize += files.reduce((acc, file) => acc + file.size, 0);
+
+  //   if (combinedFiles.length > 1 && totalFileSize > 10 * 1024 * 1024) {
+  //     Swal.fire({
+  //       toast: true,
+  //       icon: "warning",
+  //       position: "top-end",
+  //       title: "Total file size exceeds 10MB limit",
+  //       showConfirmButton: false,
+  //       timerProgressBar: true,
+  //       timer: 3000,
+  //     });
+  //     return;
+  //   }
+
+  //   setFiles(combinedFiles);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -174,6 +238,17 @@ const RegisterComplaint = () => {
         <div className="claims_management py-5">
           <div className="container">
             <div className="row">
+              <div className=" d-flex justify-content-end">
+                <button
+                  data-bs-toggle="modal"
+                  data-bs-target="#forgotpassword"
+                  className="form_btns mb-3"
+                  alt="i"
+                  type="button"
+                >
+                  View All Complaints
+                </button>
+              </div>
               <div className="col-md-12 mt-lg-3">
                 <form
                   action="#"
@@ -319,6 +394,7 @@ const RegisterComplaint = () => {
                       onChange={handleFileChange}
                       placeholder="Attach a File"
                       multiple
+                      accept=".pdf, .png, .jpg, .jpeg"
                     />
                     <label htmlFor="v">
                       <img src="/assets/img/attech.png" alt />
@@ -342,6 +418,57 @@ const RegisterComplaint = () => {
                     </button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal fade auth_modal"
+            id="forgotpassword"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabIndex={-1}
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  />
+                  <div className="">
+                    <div>
+                      {listOfComplaints && listOfComplaints?.length ? (
+                        listOfComplaints?.map((item, i) => (
+                          <>
+                            <div className="bg-light my-3 p-2 border rounded">
+                              <div className="d-flex align-items-center justify-content-between">
+                                <div>{item?.TicketId}</div>
+                                <div className="bg-success text-white rounded-pill px-3 py-1">
+                                  {item?.TicketStatus}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="fw-bold text-start">
+                                  {item?.TicketDescription}
+                                </div>
+                                <div className="text-start">
+                                  {item?.TicketDateTime}
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ))
+                      ) : (
+                        <h3>No Complaints Found</h3>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import {
   addMoreInfoAboutUser,
   addUserInfo,
 } from "../../app/slice/userInfoSlice";
+import BackBtn from "../../utils/BackBtn";
 
 const MyProfile = () => {
   const [userDetailsData, setUserDetailsData] = useState();
@@ -37,35 +38,31 @@ const MyProfile = () => {
   return (
     <Layout>
       <>
-
         <div className="claims_management pt-4 pb-lg-5">
           <div className="container">
             <div className="row">
               <div className="col-md-12 mb-lg-4 mb-md-3 mb-3">
                 <div className="row info_head align-items-center mb-md-3">
-                  <div className="col d-flex align-items-center">
-                    <Link>
-                      <img src="/assets/img/arrow-left1.png" alt="i" />
+                  <div className="col d-flex align-items-center justify-content-between">
+                    <div className=" d-flex align-items-center">
+                      <BackBtn />
+                      <h2>My Profile</h2>
+                    </div>
+                    <Link
+                      className="form_btns"
+                      to="/edit-profile"
+                      state={userDetailsData}
+                    >
+                      Edit
                     </Link>
-                    <h2>My Profile</h2>
                   </div>
                 </div>
               </div>
               <div className="col-md-12">
                 <div className="row justify-content-center">
                   <div className="col-md-12">
-                    <div className="row myprofile position-relative">
-                      <Link
-                        className="editbtn"
-                        to="/edit-profile"
-                        state={userDetailsData}
-                      >
-                        Edit
-                      </Link>
-                      <div className="col-auto position-relative myprofile_main text-center">
-                        <div className="myprofile_img">
-                          <img src="/assets/img/img1.png" alt="i" />
-                        </div>
+                    <div className="row  position-relative">
+                      <div className="text-center">
                         <h3>{userDetailsData?.Name}</h3>
                         <span>{`+933 ${
                           userDetailsData?.MobileNo || "NA"
@@ -73,8 +70,8 @@ const MyProfile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-10">
-                    <div className="row myprofile_details">
+                  <div className="col-lg-10 bg-light rounded mt-2">
+                    <div className="row pt-4 ">
                       <div className="col-lg-2 col-md-3 mb-md-5 mb-md-4 mb-4">
                         <div className="myprofile_text">
                           <span>National Id</span>

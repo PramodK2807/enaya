@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Home from "./Components/Home/Home";
 import BrokerPortal from "./Components/OurServices/BrokerPortal";
@@ -29,8 +29,14 @@ import NewClaim from "./Components/ClaimManagement/NewClaim";
 import PolicyInfo from "./Components/Profile/PolicyInfo";
 import VisitVisa from "./Components/OurProducts/Individual/VisitVisa";
 import RegisterComplaint from "./Components/ContactUs/RegisterComplaint";
+import { useEffect } from "react";
 
 function App() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />

@@ -443,3 +443,37 @@ export async function ComplaintsList(formData) {
     return { error };
   }
 }
+export async function NotificationList(formData) {
+  try {
+    const { data } = await mainHttpService.post(
+      `${process.env.REACT_APP_OURAPI}/Notification/SendNotification`,
+      formData
+    );
+    if (data && data?.StatusCode === "F") {
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      return;
+    } else {
+      return { data };
+    }
+  } catch (error) {
+    if (error.response)
+      Swal.fire({
+        toast: true,
+        icon: "error",
+        position: "top-end",
+        title: error.response.data.StatusDescription,
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+    return { error };
+  }
+}

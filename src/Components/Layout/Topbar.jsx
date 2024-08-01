@@ -1,13 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import SecureLS from "secure-ls";
+import { NotificationList } from "../../AdminHttpServices/dashHttpServices";
 
 const ls = new SecureLS();
 
 const Topbar = () => {
   const userData = useSelector((state) => state?.user?.userData);
-  let token = ls.get('enaya-token');
+  const [showModal, setShowModal] = useState(false);
+  const [notification, setNotification] = useState([]);
+  let token = ls.get("enaya-token");
+
+  useEffect(() => {
+    if (token) {
+      getNotification();
+    }
+  }, []);
+
+  const getNotification = async () => {
+    try {
+      let { data } = await NotificationList({
+        IdentityNo: userData?.InsuranceNumber,
+        PolicyNo: userData?.PolicyNo,
+        MemberNo: userData?.Memberno,
+      });
+      if (data && !data?.error) {
+        setNotification(data?.NotificationList);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <div className="top_header">
@@ -91,7 +116,7 @@ const Topbar = () => {
                     </div>
                   </form>
                 </div>
-                <div className="col-auto">
+                <div className="col-auto d-flex align-items-center">
                   {token && (
                     <Link to={"/profile"}>
                       <img src="/assets/img/account.png" alt="" />
@@ -102,6 +127,66 @@ const Topbar = () => {
                       <img src="/assets/img/account.png" alt="" />
                     </Link>
                   )}
+
+                  <div className="">
+                    <button
+                      onClick={() => setShowModal(!showModal)}
+                      style={{ border: "none", background: "none" }}
+                    >
+                      <img
+                        height={20}
+                        width={20}
+                        style={{
+                          border: "2px solid #cae4d7",
+                          borderRadius: "50%",
+                          padding: "3px",
+                        }}
+                        src="/assets/img/bell.png"
+                        alt=""
+                      />
+                    </button>
+
+                    <div
+                      className={`notification_modal overflow-auto ${
+                        showModal ? "show" : ""
+                      }`}
+                    >
+                      <div className="d-flex rounded align-items-center justify-content-between bg-light px-3 py-2">
+                        <h4>Notifications</h4>
+                        <div
+                          onClick={() => setShowModal(false)}
+                          className="cursor_pointer"
+                        >
+                          <img
+                            className="cut"
+                            src="/assets/img/cut.png"
+                            alt="Remove"
+                          />
+                        </div>
+                      </div>
+
+                      {notification && notification?.length > 0 ? (
+                        notification?.map((item, i) => (
+                          <>
+                            <div className="row align-items-center bg-light my-2 px-0 mx-0">
+                              <div className="col-2">
+                                <img
+                                  src="/assets/img/favicon.png"
+                                  className="w-100 h-100"
+                                  alt=""
+                                />
+                              </div>
+                              <div className="col-10">
+                               {item?.Notification}
+                              </div>
+                            </div>
+                          </>
+                        ))
+                      ) : (
+                        <p className="text-center">No notifications found</p>
+                      )}
+                    </div>
+                  </div>
                 </div>
                 {/* <div className="col-auto">
                   <a

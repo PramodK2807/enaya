@@ -6,6 +6,7 @@ import {
   ResetPassword,
   SendOtp,
   VerifyOtp,
+  VerifyOTPToRestPassword,
 } from "../../AdminHttpServices/LoginHttpsService";
 import { useDispatch } from "react-redux";
 import { addCardDetails, addUserInfo } from "../../app/slice/userInfoSlice";
@@ -110,47 +111,59 @@ const Login = () => {
   };
 
   const handleVerifyOTP = async () => {
-    document.getElementById("otpModalClose").click();
-    const resetPasswordModal = document.getElementById("resetpassword");
-    const resetPasswordBootstrapModal = new window.bootstrap.Modal(
-      resetPasswordModal
-    );
-    resetPasswordBootstrapModal.show();
-    // try {
-    //   let { data } = await VerifyOTPToRestPassword({
-    //     IdentityNo: identityNumber,
-    //     OTPId: forgotPassApiData?.OTPId,
-    //     OTP: otp,
-    //   });
+    // document.getElementById("otpModalClose").click();
+    // const resetPasswordModal = document.getElementById("resetpassword");
+    // const resetPasswordBootstrapModal = new window.bootstrap.Modal(
+    //   resetPasswordModal
+    // );
+    // resetPasswordBootstrapModal.show();
+    try {
+      let { data } = await VerifyOTPToRestPassword({
+        IdentityNo: identityNumber,
+        OTPId: forgotPassApiData?.OTPId,
+        OTP: otp,
+      });
 
-    //   if (data && data?.StatusCode === "S") {
-    //     document.getElementById("otpModalClose").click();
-    //     const resetPasswordModal = document.getElementById("resetpassword");
-    //     const resetPasswordBootstrapModal = new window.bootstrap.Modal(
-    //       resetPasswordModal
-    //     );
-    //     resetPasswordBootstrapModal.show();
-    //     Swal.fire({
-    //       toast: true,
-    //       icon: "success",
-    //       position: "top-end",
-    //       title: "OTP Verified",
-    //       showConfirmButton: false,
-    //       timerProgressBar: true,
-    //       timer: 3000,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      if (data && data?.StatusCode === "S") {
+        document.getElementById("otpModalClose").click();
+        const resetPasswordModal = document.getElementById("resetpassword");
+        const resetPasswordBootstrapModal = new window.bootstrap.Modal(
+          resetPasswordModal
+        );
+        resetPasswordBootstrapModal.show();
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: "OTP Verified",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (info) => {
     try {
       let { data } = await ResetPassword({
         IdentityNo: identityNumber,
-        // MobileNo: phoneNumber ?? "",
+        password: info?.password,
+        confirmPassword: info?.cpassword,
       });
+      if (data ) {
+        Swal.fire({
+          toast: true,
+          icon: "success",
+          position: "top-end",
+          title: data?.StatusDescription,
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -174,7 +187,7 @@ const Login = () => {
                   Tristique arcu a nisi, semper. Ut cras odio ac sem ac.
                 </p>
                 <form className="form_desig row" action="#">
-                  <div className="form-group col-md-12">
+                  <div className="form-floating col-md-12">
                     <input
                       className="form-control"
                       type="text"
@@ -182,8 +195,9 @@ const Login = () => {
                       onChange={(e) => setIdentityNumber(e.target.value)}
                       value={identityNumber}
                     />
+                    <label htmlFor="floatingInput">National ID/Iqama ID</label>
                   </div>
-                  <div className="form-group col-md-12 position-relative">
+                  <div className="form-floating col-md-12 position-relative">
                     <input
                       className="form-control"
                       type={visible ? "password" : "text"}
@@ -191,6 +205,7 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}
                     />
+                    <label htmlFor="floatingInput">Password</label>
                     <div
                       onClick={() => setVisible(!visible)}
                       className="eyebtn cursor_pointer"
@@ -336,7 +351,7 @@ const Login = () => {
                   className="automodal_form form_desig row"
                   onSubmit={handleSubmit(handleResetPassword)}
                 >
-                  <div className="form-group col-md-12 position-relative">
+                  <div className="form-floating col-md-12 position-relative">
                     <input
                       className={`form-control ${
                         errors.password ? "is-invalid" : ""
@@ -353,6 +368,7 @@ const Login = () => {
                         },
                       })}
                     />
+                    <label htmlFor="floatingInput">Password</label>
                     <div
                       onClick={() => setVisible(!visible)}
                       className="eyebtn cursor_pointer"
@@ -374,7 +390,7 @@ const Login = () => {
                       </div>
                     )}
                   </div>
-                  <div className="form-group col-md-12 position-relative">
+                  <div className="form-floating col-md-12 position-relative">
                     <input
                       className={`form-control ${
                         errors.cpassword ? "is-invalid" : ""
@@ -386,6 +402,7 @@ const Login = () => {
                         validate: validateConfirmPassword,
                       })}
                     />
+                    <label htmlFor="floatingInput">New Password</label>
                     <div
                       onClick={() => setVisible2(!visible2)}
                       className="eyebtn cursor_pointer"

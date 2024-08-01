@@ -9,6 +9,7 @@ import {
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import BackBtn from "../../utils/BackBtn";
 
 const EditProfile = () => {
   const profileData = useSelector((state) => state?.user?.userData);
@@ -109,9 +110,7 @@ const EditProfile = () => {
                 <div className="row info_head align-items-center mb-md-3">
                   <div className="col d-flex align-items-center justify-content-between">
                     <div className="d-flex align-items-center">
-                      <a href="javascript:;">
-                        <img src="/assets/img/arrow-left1.png" alt="i" />
-                      </a>
+                      <BackBtn />
                       <h2>Edit My Profile</h2>
                     </div>
                     <div>
@@ -327,7 +326,7 @@ const EditProfile = () => {
                   className="form_desig row"
                   onSubmit={handleSubmit2(handleChangePass)}
                 >
-                  <div className="form-group col-md-12 position-relative">
+                  <div className="form-floating col-md-12 position-relative">
                     <input
                       className={`form-control ${
                         errors2.password ? "is-invalid" : ""
@@ -344,6 +343,8 @@ const EditProfile = () => {
                         },
                       })}
                     />
+                    <label htmlFor="floatingEmail">Old Password</label>
+
                     <div
                       onClick={() => setVisible(!visible)}
                       className="eyebtn cursor_pointer"
@@ -365,7 +366,7 @@ const EditProfile = () => {
                       </div>
                     )}
                   </div>
-                  <div className="form-group col-md-12 position-relative">
+                  <div className="form-floating col-md-12 position-relative">
                     <input
                       className={`form-control ${
                         errors2.newPassword ? "is-invalid" : ""
@@ -382,6 +383,8 @@ const EditProfile = () => {
                         },
                       })}
                     />
+                    <label htmlFor="floatingEmail">New Password</label>
+
                     <div
                       onClick={() => setVisible2(!visible2)}
                       className="eyebtn cursor_pointer"

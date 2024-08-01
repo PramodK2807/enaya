@@ -1,16 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../Layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import {
   Registration,
+  RegistrationCheck,
   VerifyOtp,
 } from "../../AdminHttpServices/LoginHttpsService";
 
 const Register = () => {
+  const currentYear = new Date().getFullYear();
   const [step, setStep] = useState(1);
+  const [subStep, setSubStep] = useState(1);
   const [identityNo, setIdentityNo] = useState("");
+  const [idenNumber, setIdenNumber] = useState("");
+  const [birth, setBirth] = useState("");
   const [OTPId, setOTPId] = useState("");
   const [visible, setVisible] = useState(true);
   const [tnc, setTnc] = useState(false);
@@ -20,8 +25,43 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ mode: "onChange" });
+
+  const handleCheckUser = async () => {
+    try {
+      if (!idenNumber || birth?.length !== 4) {
+        Swal.fire({
+          toast: true,
+          icon: "error",
+          position: "top-end",
+          title: "Please enter valid details",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        return false;
+      }
+
+      let { data } = await RegistrationCheck({
+        IdentityNo: idenNumber?.trim(),
+        YearOfBirth: birth?.trim(),
+        deviceOS: "Web",
+        fcmToken: "",
+      });
+
+      // setValue("identityNumber", idenNumber);
+      // setSubStep(2);
+
+      if (data && !data?.error) {
+        setValue("identityNumber", idenNumber);
+        setSubStep(2);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onSubmit = async (info) => {
     try {
@@ -120,11 +160,30 @@ const Register = () => {
           timerProgressBar: true,
           timer: 3000,
         });
-        setStep(3)
+        setStep(3);
       }
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+
+    // Ensure only numeric input
+    if (isNaN(value)) return;
+
+    // Trim to 4 digits
+    if (value.length > 4) {
+      value = value.slice(0, 4);
+    }
+
+    // Check if the value exceeds the current year
+    if (parseInt(value, 10) > currentYear) {
+      value = currentYear.toString();
+    }
+
+    setBirth(value);
   };
 
   return (
@@ -136,190 +195,249 @@ const Register = () => {
         >
           <div className="container">
             <div className="row align-items-center">
-              <div className="col-lg-6" data-aos="fade-right">
-                <div className="auth_page_content">
+              <div class="col-lg-6" data-aos="fade-right">
+                <div class="auth_page_content">
                   <h1>Register For Account</h1>
-                  <form
-                    className="form_desig row"
-                    onSubmit={handleSubmit(onSubmit)}
-                  >
-                    <div className="form-group col-md-6">
-                      <input
-                        type="number"
-                        placeholder="National ID/Iqama ID"
-                        className={`form-control ${
-                          errors.identityNumber ? "is-invalid" : ""
-                        }`}
-                        {...register("identityNumber", {
-                          required: "* Please enter a Identity Number",
-                        })}
-                      />
-                      {errors.identityNumber && (
-                        <div className="invalid-feedback">
-                          {errors.identityNumber.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6">
-                      <input
-                        type="text"
-                        placeholder="Policy Number"
-                        className={`form-control ${
-                          errors.policyNumber ? "is-invalid" : ""
-                        }`}
-                        {...register("policyNumber", {
-                          required: "* Please enter a Policy Number",
-                        })}
-                      />
-                      {errors.policyNumber && (
-                        <div className="invalid-feedback">
-                          {errors.policyNumber.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6">
-                      <input
-                        type="text"
-                        placeholder="Full Name"
-                        className={`form-control ${
-                          errors.fullName ? "is-invalid" : ""
-                        }`}
-                        {...register("fullName", {
-                          required: "* Please enter Full Name",
-                        })}
-                      />
-                      {errors.fullName && (
-                        <div className="invalid-feedback">
-                          {errors.fullName.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6">
-                      <input
-                        type="email"
-                        placeholder="Email ID"
-                        className={`form-control ${
-                          errors.email ? "is-invalid" : ""
-                        }`}
-                        {...register("email", {
-                          required: "Please enter a email",
-                          pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: "Invalid email address",
-                          },
-                        })}
-                      />
-                      {errors.email && (
-                        <div className="invalid-feedback">
-                          {errors.email.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6">
-                      <input
-                        type="text"
-                        placeholder="Phone Number"
-                        className={`form-control ${
-                          errors.phoneNumber ? "is-invalid" : ""
-                        }`}
-                        {...register("phoneNumber", {
-                          required: "* Please enter a phone number",
-                          maxLength: {
-                            value: 10,
-                            message: "Phone number should be 10 digits",
-                          },
-                          minLength: {
-                            value: 9,
-                            message: "Phone number should be 9 digits",
-                          },
-                        })}
-                      />
-                      {errors.phoneNumber && (
-                        <div className="invalid-feedback">
-                          {errors.phoneNumber.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-6">
-                      <input
-                        type="text"
-                        placeholder="Address"
-                        className={`form-control ${
-                          errors.address ? "is-invalid" : ""
-                        }`}
-                        {...register("address", {
-                          required: "* Please enter a address",
-                        })}
-                      />
-                      {errors.address && (
-                        <div className="invalid-feedback">
-                          {errors.address.message}
-                        </div>
-                      )}
-                    </div>
-                    <div className="form-group col-md-12 position-relative">
-                      <input
-                        className={`form-control ${
-                          errors.password ? "is-invalid" : ""
-                        }`}
-                        type={visible ? "text" : "password"}
-                        placeholder="Password"
-                        {...register("password", {
-                          required: "* Please Enter Your Password",
-                          pattern: {
-                            value:
-                              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                            message:
-                              "* Minimum 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
-                          },
-                        })}
-                      />
-                      <div
-                        onClick={() => setVisible(!visible)}
-                        className="eyebtn cursor_pointer"
-                      >
-                        {visible ? (
-                          <img src="/assets/img/eye.png" alt="i" />
-                        ) : (
-                          <img
-                            height={16}
-                            width={16}
-                            src="/assets/img/hide.png"
-                            alt="i"
-                          />
-                        )}
-                      </div>
-                      {errors.password && (
-                        <div className="invalid-feedback">
-                          {errors.password.message}
-                        </div>
-                      )}
-                    </div>
-                    <div class="form-group col-md-12">
-                      <div class="checkbox_main">
+                  {subStep === 1 && (
+                    <form className="form_desig row">
+                      <div className="form-floating col-md-6">
                         <input
-                          class="d-none"
-                          type="checkbox"
-                          id="checkbox"
-                          name="checkbox"
-                          checked={tnc}
-                          onChange={() => setTnc(!tnc)}
+                          type="number"
+                          placeholder="National ID/Iqama ID"
+                          className="form-control"
+                          value={idenNumber}
+                          onChange={(e) => setIdenNumber(e.target.value)}
                         />
-                        <label for="checkbox">
-                          I agree to terms & conditions
+                        <label htmlFor="floatingInput">
+                          National ID/Iqama ID
                         </label>
                       </div>
-                      <div class="checkbox_main"></div>
-                    </div>
-                    <div className="form-group col-md-12">
-                      <button type="submit" className="form_btns">
-                        Register
-                      </button>
-                      <button type="reset" id="reset" className="d-none">
-                        reset
-                      </button>
-                    </div>
-                  </form>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="number"
+                          className="form-control"
+                          min={1980}
+                          max={currentYear}
+                          value={birth}
+                          onChange={handleChange}
+                          placeholder="Birth Year"
+                        />
+                        <label htmlFor="floatingInput">Birth Year (YYYY)</label>
+                      </div>
+
+                      <div className="form-group col-md-12">
+                        <button
+                          type="button"
+                          onClick={handleCheckUser}
+                          className="form_btns"
+                        >
+                          Check
+                        </button>
+                        <button type="reset" id="reset" className="d-none">
+                          reset
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                  {subStep === 2 && (
+                    <form
+                      className="form_desig row"
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="number"
+                          placeholder="National ID/Iqama ID"
+                          className={`form-control ${
+                            errors.identityNumber ? "is-invalid" : ""
+                          }`}
+                          {...register("identityNumber", {
+                            required: "* Please enter a Identity Number",
+                          })}
+                        />
+                        <label htmlFor="floatingInput">
+                          National ID/Iqama ID
+                        </label>
+
+                        {errors.identityNumber && (
+                          <div className="invalid-feedback">
+                            {errors.identityNumber.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Policy Number"
+                          className={`form-control ${
+                            errors.policyNumber ? "is-invalid" : ""
+                          }`}
+                          {...register("policyNumber", {
+                            required: "* Please enter a Policy Number",
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Policy Number</label>
+
+                        {errors.policyNumber && (
+                          <div className="invalid-feedback">
+                            {errors.policyNumber.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          className={`form-control ${
+                            errors.fullName ? "is-invalid" : ""
+                          }`}
+                          {...register("fullName", {
+                            required: "* Please enter Full Name",
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Full Name</label>
+
+                        {errors.fullName && (
+                          <div className="invalid-feedback">
+                            {errors.fullName.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="email"
+                          placeholder="Email ID"
+                          className={`form-control ${
+                            errors.email ? "is-invalid" : ""
+                          }`}
+                          {...register("email", {
+                            required: "Please enter a email",
+                            pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              message: "Invalid email address",
+                            },
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Email ID</label>
+
+                        {errors.email && (
+                          <div className="invalid-feedback">
+                            {errors.email.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Phone Number"
+                          className={`form-control ${
+                            errors.phoneNumber ? "is-invalid" : ""
+                          }`}
+                          {...register("phoneNumber", {
+                            required: "* Please enter a phone number",
+                            maxLength: {
+                              value: 10,
+                              message: "Phone number should be 10 digits",
+                            },
+                            minLength: {
+                              value: 9,
+                              message: "Phone number should be 9 digits",
+                            },
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Phone Number</label>
+
+                        {errors.phoneNumber && (
+                          <div className="invalid-feedback">
+                            {errors.phoneNumber.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-6">
+                        <input
+                          type="text"
+                          placeholder="Address"
+                          className={`form-control ${
+                            errors.address ? "is-invalid" : ""
+                          }`}
+                          {...register("address", {
+                            required: "* Please enter a address",
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Address</label>
+
+                        {errors.address && (
+                          <div className="invalid-feedback">
+                            {errors.address.message}
+                          </div>
+                        )}
+                      </div>
+                      <div className="form-floating col-md-12 position-relative">
+                        <input
+                          className={`form-control ${
+                            errors.password ? "is-invalid" : ""
+                          }`}
+                          type={visible ? "text" : "password"}
+                          placeholder="Password"
+                          {...register("password", {
+                            required: "* Please Enter Your Password",
+                            pattern: {
+                              value:
+                                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                              message:
+                                "* Minimum 8 characters, One Uppercase, One Lowercase & One Special Character Allowed",
+                            },
+                          })}
+                        />
+                        <label htmlFor="floatingInput">Password</label>
+
+                        <div
+                          onClick={() => setVisible(!visible)}
+                          className="eyebtn cursor_pointer"
+                        >
+                          {visible ? (
+                            <img src="/assets/img/eye.png" alt="i" />
+                          ) : (
+                            <img
+                              height={16}
+                              width={16}
+                              src="/assets/img/hide.png"
+                              alt="i"
+                            />
+                          )}
+                        </div>
+                        {errors.password && (
+                          <div className="invalid-feedback">
+                            {errors.password.message}
+                          </div>
+                        )}
+                      </div>
+                      <div class="form-group col-md-12">
+                        <div class="checkbox_main">
+                          <input
+                            class="d-none"
+                            type="checkbox"
+                            id="checkbox"
+                            name="checkbox"
+                            checked={tnc}
+                            onChange={() => setTnc(!tnc)}
+                          />
+                          <label for="checkbox">
+                            I agree to terms & conditions
+                          </label>
+                        </div>
+                        <div class="checkbox_main"></div>
+                      </div>
+                      <div className="form-group col-md-12">
+                        <button type="submit" className="form_btns">
+                          Register
+                        </button>
+                        <button type="reset" id="reset" className="d-none">
+                          reset
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
               </div>
             </div>
@@ -366,7 +484,6 @@ const Register = () => {
           </div>
         </div>
       )}
-
 
       {/* GREETS */}
 

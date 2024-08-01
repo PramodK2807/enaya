@@ -118,7 +118,7 @@ h6 {
   top: 51px;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 9;
   background-color: #fff;
 }
 .header-fixed { 
@@ -344,7 +344,7 @@ h6 {
   left: 0;
   right: 0;
   top: 0;
-  z-index: 9999;
+  z-index: 99;
 }
 .header_menus .menus_li .mega_dropdown {
   background: #fff;
