@@ -22,8 +22,11 @@ const Topbar = () => {
   const navigate = useNavigate();
   let token = ls.get("enaya-token");
 
-  const [identityNumber, setIdentityNumber] = useState("2346518455");
-  const [password, setPassword] = useState("12345");
+  const [identityNumber, setIdentityNumber] = useState("");
+  const [password, setPassword] = useState("");
+
+  // const [identityNumber, setIdentityNumber] = useState("2346518455");
+  // const [password, setPassword] = useState("12345");
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
 
@@ -436,12 +439,18 @@ const Topbar = () => {
                       <h2>Saudi Enaya App</h2>
                       <h3>Refine your approch insurance</h3>
                       <div className="downloadapp">
-                        <a href="javascript:;">
-                          <img src="/assets/img/appstrore.png" alt />
-                        </a>
-                        <a href="javascript:;">
-                          <img src="/assets/img/google.png" alt />
-                        </a>
+                        <Link
+                          target="_blank"
+                          to="https://apps.apple.com/us/app/saudi-enaya/id6503640454"
+                        >
+                          <img src="/assets/img/appstrore.png" alt="app" />
+                        </Link>
+                        <Link
+                          target="_blank"
+                          to="https://play.google.com/store/apps/details?id=com.saudi.enaya"
+                        >
+                          <img src="/assets/img/google.png" alt="google" />
+                        </Link>
                       </div>
                       <p>
                         Download our intuitive app to easily manage add control
