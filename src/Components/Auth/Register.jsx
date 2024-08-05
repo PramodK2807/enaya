@@ -17,7 +17,7 @@ const Register = () => {
   const [idenNumber, setIdenNumber] = useState("");
   const [birth, setBirth] = useState("");
   const [OTPId, setOTPId] = useState("");
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [tnc, setTnc] = useState(false);
   const [otp, setOtp] = useState("");
   const inputs = useRef([]);

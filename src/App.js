@@ -1,5 +1,6 @@
 import { Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 import Home from "./Components/Home/Home";
 import BrokerPortal from "./Components/OurServices/BrokerPortal";
 import Endorse from "./Components/OurServices/Endorse";
@@ -69,22 +70,83 @@ function App() {
       <Route
         exact
         path="/contact-us/register-complaints"
-        element={<RegisterComplaint />}
+        element={
+          <ProtectedRoutes>
+            <RegisterComplaint />
+          </ProtectedRoutes>
+        }
       />
       <Route exact path="/about-us" element={<AboutUs />} />
-      <Route exact path="/profile" element={<MyProfile />} />
-      <Route exact path="/edit-profile" element={<EditProfile />} />
-      <Route exact path="/policy-benefits" element={<MyPolicyBenefits />} />
+      <Route
+        exact
+        path="/profile"
+        element={
+          <ProtectedRoutes>
+            <MyProfile />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        exact
+        path="/edit-profile"
+        element={
+          <ProtectedRoutes>
+            <EditProfile />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        exact
+        path="/policy-benefits"
+        element={
+          <ProtectedRoutes>
+            <MyPolicyBenefits />
+          </ProtectedRoutes>
+        }
+      />
       <Route exact path="/policy-info" element={<PolicyInfo />} />
       <Route exact path="/terms-and-conditions" element={<Terms />} />
       <Route exact path="/disclaimer" element={<Desclaimer />} />
       <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route exact path="/help-&-support" element={<HelpAndSupport />} />
       <Route exact path="/get-quote" element={<GetQuote />} />
-      <Route exact path="/claim-management" element={<ClaimManagement />} />
-      <Route exact path="/claim-management/add-new" element={<NewClaim />} />
-      <Route exact path="/provide-network" element={<ProvideNetwork />} />
-      <Route exact path="/network-provider" element={<NetworkProvider />} />
+
+      <Route
+        exact
+        path="/claim-management"
+        element={
+          <ProtectedRoutes>
+            <ClaimManagement />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        exact
+        path="/claim-management/add-new"
+        element={
+          <ProtectedRoutes>
+            <NewClaim />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        exact
+        path="/provide-network"
+        element={
+          <ProtectedRoutes>
+            <ProvideNetwork />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        exact
+        path="/network-provider"
+        element={
+          <ProtectedRoutes>
+            <NetworkProvider />
+          </ProtectedRoutes>
+        }
+      />
       <Route
         exact
         path="/select-your-account"

@@ -1,36 +1,35 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
-import ProfileModal from "../Profile/ProfileModal";
 import {
   AddNewClaim,
   ClaimInfo,
 } from "../../AdminHttpServices/dashHttpServices";
 import { useForm } from "react-hook-form";
-import Select from "react-select";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Swal from "sweetalert2";
 import BackBtn from "../../utils/BackBtn";
+import { useNavigate } from "react-router-dom";
 
 const NewClaim = () => {
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const [selectedMember, setSelectedMember] = useState(null);
-  const [countryListOptions, setCountryListOptions] = useState([]);
-  const [patientListOptions, setPatientListOptions] = useState([]);
-  const [memberListOptions, setMemberListOptions] = useState([]);
   const [files, setFiles] = useState([]);
   const [tnc, setTnc] = useState(false);
+  const [admissionDate, setAdmissionDate] = useState(null);
+  const [countryList, setCountryList] = useState();
+  const [patientList, setPatientList] = useState();
+  const [memberList, setMemberList] = useState();
+
+  const [patientType, setPatientType] = useState(null);
 
   const userData = useSelector((state) => state?.user?.userData);
   const moreInfo = useSelector((state) => state?.user?.moreInfoAboutUser);
-  console.log(moreInfo);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
+    getValues,
   } = useForm({ mode: "onChange" });
 
   useEffect(() => {
@@ -45,6 +44,8 @@ const NewClaim = () => {
     setValue("address", moreInfo?.Address);
   }, []);
 
+  console.log("err", errors);
+
   const getClaimInfo = async () => {
     try {
       let { data } = await ClaimInfo({
@@ -54,25 +55,13 @@ const NewClaim = () => {
       });
       if (data && !data?.error) {
         if (data?.countryList) {
-          const countryList = data?.countryList.map((country) => ({
-            value: country.CountryCode,
-            label: country.CountryName,
-          }));
-          setCountryListOptions(countryList);
+          setCountryList(data?.countryList);
         }
         if (data?.PatientType) {
-          const PatientList = data.PatientType.map((p) => ({
-            value: p,
-            label: p,
-          }));
-          setPatientListOptions(PatientList);
+          setPatientList(data?.PatientType);
         }
         if (data?.EmployeeList) {
-          const EmpList = data.EmployeeList.map((p) => ({
-            value: p?.MemberNo,
-            label: p?.Name,
-          }));
-          setMemberListOptions(EmpList);
+          setMemberList(data?.EmployeeList);
         }
       }
     } catch (error) {
@@ -83,7 +72,7 @@ const NewClaim = () => {
   const onSubmit = async (info) => {
     console.log(info, files);
     try {
-      if (!tnc) {
+      if (!tnc || tnc === null || tnc === false) {
         Swal.fire({
           toast: true,
           icon: "warning",
@@ -96,34 +85,34 @@ const NewClaim = () => {
         return false;
       }
       const formData = new FormData();
-      formData.append("Country", selectedCountry?.value || "");
-      formData.append("PatientType", selectedPatient?.value || "");
-      formData.append("RelationMemberNo", selectedMember?.value || "");
+      formData.append("Country", info?.country || "");
+      formData.append("PatientType", info?.patient || "");
+      formData.append("RelationMemberNo", info?.member || "");
       formData.append("serviceProviderName", info?.serviceProviderName || "");
       formData.append(
         "ClaimIncurredDate",
-        moment(new Date()).format("('YYYY-MM-DD')")
+        moment(new Date()).format("YYYY-MM-DD")
       );
 
-      if (selectedPatient === "IPD") {
+      if (info?.patient === "IPD") {
         formData.append(
           "ClaimDischargeDate",
-          moment(info?.claimDischargeDate).format("('YYYY-MM-DD')")
+          moment(info?.claimDischargeDate).format("YYYY-MM-DD")
         );
         formData.append(
           "ClaimAddmissionDate",
-          moment(info?.claimAdmissionDate).format("('YYYY-MM-DD')")
+          moment(info?.claimAdmissionDate).format("YYYY-MM-DD")
         );
       }
-      if (selectedPatient === "OPD") {
+      if (info?.patient === "OPD") {
         formData.append(
           "TreatmentDate",
           info?.treatmentDate
-            ? moment(info?.treatmentDate).format("('YYYY-MM-DD')")
+            ? moment(info?.treatmentDate).format("YYYY-MM-DD")
             : ""
         );
       }
-      formData.append("ClaimedAmount", info?.claimedAmount || "");
+      formData.append("ClaimedAmount", info?.amount || "");
       formData.append("BankName", info?.bankName || "");
       formData.append("AccountHolderName", info?.accountHolderName || "");
       formData.append("AccountNumber", info?.accountNumber || "");
@@ -143,6 +132,7 @@ const NewClaim = () => {
       if (data && !data?.error) {
         setFiles([]);
         document.getElementById("reset").click();
+        navigate("/claim-management");
       }
       console.log(data);
     } catch (error) {
@@ -152,10 +142,10 @@ const NewClaim = () => {
   const handleFileChange = (e) => {
     const newFiles = Array.from(e.target.files);
     const currentFiles = files;
-    
+
     // Calculate the total size of new files
     let newFilesSize = newFiles.reduce((acc, file) => acc + file.size, 0);
-  
+
     // Check if any single new file exceeds the 5MB limit
     // if (newFiles.some(file => file.size > 5 * 1024 * 1024)) {
     //   Swal.fire({
@@ -169,10 +159,11 @@ const NewClaim = () => {
     //   });
     //   return;
     // }
-  
+
     // Calculate the total size if new files are added to existing files
-    let totalFileSize = currentFiles.reduce((acc, file) => acc + file.size, 0) + newFilesSize;
-  
+    let totalFileSize =
+      currentFiles.reduce((acc, file) => acc + file.size, 0) + newFilesSize;
+
     // Check if the total size exceeds 10MB
     if (totalFileSize > 10 * 1024 * 1024) {
       Swal.fire({
@@ -186,7 +177,7 @@ const NewClaim = () => {
       });
       return;
     }
-  
+
     // Check if the total number of files exceeds 5
     if (currentFiles.length + newFiles.length > 5) {
       Swal.fire({
@@ -200,7 +191,7 @@ const NewClaim = () => {
       });
       return;
     }
-  
+
     // Update the files state
     setFiles([...currentFiles, ...newFiles]);
   };
@@ -248,6 +239,26 @@ const NewClaim = () => {
     const newFiles = files.filter((_, i) => i !== index);
     setFiles(newFiles);
   };
+  const handleAdmissionDateChange = (e) => {
+    const selectedDate = e.target.value;
+    setAdmissionDate(selectedDate);
+  };
+  const handleDischargeValidation = (e) => {
+    if (!getValues("claimAdmissionDate")) {
+      Swal.fire({
+        toast: true,
+        icon: "warning",
+        position: "top-end",
+        title: "Please select Admission Date first",
+        showConfirmButton: false,
+        timerProgressBar: true,
+        timer: 3000,
+      });
+      e.preventDefault();
+      return false;
+    }
+    return true;
+  };
 
   return (
     <Layout>
@@ -277,34 +288,45 @@ const NewClaim = () => {
                     onSubmit={handleSubmit(onSubmit)}
                   >
                     <div className="form-floating col-lg-4 col-md-6">
-                      <div className="form-control position-relative">
-                        <Select
-                          placeholder="Select a country"
-                          options={countryListOptions}
-                          value={selectedCountry}
-                          onChange={(selectedMembers) =>
-                            setSelectedCountry(selectedMembers)
-                          }
-                          className={`w-100 h-100 ${
-                            errors.country ? "is-invalid" : ""
-                          }`}
-                        />
-                        {errors.country && (
-                          <div className="invalid-feedback">
-                            {errors.country.message}
-                          </div>
-                        )}
-                      </div>
+                      <select
+                        // className={`form-select ${
+                        //   errors.country ? "is-invalid" : ""
+                        // }`}
+                        className="form-select"
+                        {...register("country", {
+                          required: "Please select a country",
+                        })}
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                      >
+                        {/* <option value="">Select a country</option> */}
+                        {countryList &&
+                          countryList?.map((item) => (
+                            <option
+                              key={item?.CountryCode}
+                              value={item?.CountryCode}
+                              selected={item?.CountryCode === 966}
+                            >
+                              {item?.CountryName}
+                            </option>
+                          ))}
+                      </select>
+                      {errors.country && (
+                        <div className="invalid-feedback">
+                          {errors.country.message}
+                        </div>
+                      )}
                     </div>
+
                     <div className="form-floating col-lg-4 col-md-6">
                       <input
                         type="text"
                         id="floatingInput"
                         placeholder="Service Provider Name"
                         className={`form-control ${
-                          errors.serviceProvider ? "is-invalid" : ""
+                          errors.serviceProviderName ? "is-invalid" : ""
                         }`}
-                        {...register("serviceProvider", {
+                        {...register("serviceProviderName", {
                           required: "Please select service provider",
                           maxLength: {
                             value: 30,
@@ -317,9 +339,9 @@ const NewClaim = () => {
                           },
                         })}
                       />
-                      {errors.serviceProvider && (
+                      {errors.serviceProviderName && (
                         <div className="invalid-feedback">
-                          {errors.serviceProvider.message}
+                          {errors.serviceProviderName.message}
                         </div>
                       )}
                       <label htmlFor="floatingInput">
@@ -327,44 +349,55 @@ const NewClaim = () => {
                       </label>
                     </div>
                     <div className="form-floating col-lg-4 col-md-6">
-                      <div className="form-control position-relative">
-                        <Select
-                          value={selectedPatient}
-                          options={patientListOptions}
-                          placeholder="Patient Type"
-                          className={`w-100 h-100 ${
-                            errors.patientType ? "is-invalid" : ""
-                          }`}
-                          onChange={(selectedPatient) =>
-                            setSelectedPatient(selectedPatient)
-                          }
-                        />
-                        {errors.patientType && (
-                          <div className="invalid-feedback">
-                            {errors.patientType.message}
-                          </div>
-                        )}
-                      </div>
+                      <select
+                        className={`form-select ${
+                          errors.patient ? "is-invalid" : ""
+                        }`}
+                        {...register("patient", {
+                          required: "Please select Patient type",
+                        })}
+                        onChange={(e) => setPatientType(e.target.value)}
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                      >
+                        <option value="">Select Patient type</option>
+                        {patientList &&
+                          patientList?.map((item) => (
+                            <option key={item} value={item}>
+                              {item}
+                            </option>
+                          ))}
+                      </select>
+                      {errors.patient && (
+                        <div className="invalid-feedback">
+                          {errors.patient.message}
+                        </div>
+                      )}
                     </div>
                     <div className="form-floating col-lg-4 col-md-6">
-                      <div className="form-control position-relative">
-                        <Select
-                          options={memberListOptions}
-                          value={selectedMember}
-                          placeholder="Select Member"
-                          className={`w-100 h-100 ${
-                            errors.member ? "is-invalid" : ""
-                          }`}
-                          onChange={(selectedMember) =>
-                            setSelectedMember(selectedMember)
-                          }
-                        />
-                        {errors.member && (
-                          <div className="invalid-feedback">
-                            {errors.member.message}
-                          </div>
-                        )}
-                      </div>
+                      <select
+                        className={`form-select ${
+                          errors.member ? "is-invalid" : ""
+                        }`}
+                        {...register("member", {
+                          required: "Please select Member",
+                        })}
+                        id="floatingSelect"
+                        aria-label="Floating label select example"
+                      >
+                        <option value="">Select Member</option>
+                        {memberList &&
+                          memberList?.map((item) => (
+                            <option key={item?.MemberNo} value={item?.MemberNo}>
+                              {item?.Name}
+                            </option>
+                          ))}
+                      </select>
+                      {errors.member && (
+                        <div className="invalid-feedback">
+                          {errors.member.message}
+                        </div>
+                      )}
                     </div>
                     <div className="form-floating col-lg-4 col-md-6">
                       <input
@@ -391,13 +424,17 @@ const NewClaim = () => {
                         Amount Being Claimed
                       </label>
                     </div>
-                    {selectedPatient?.value === "OPD" && (
+                    {patientType === "OPD" && (
                       <div className="form-floating col-lg-4 col-md-6">
                         <input
                           type="date"
+                          max={new Date().toISOString().split("T")[0]}
                           id="floatingInput"
                           {...register("treatmentDate", {
-                            required: "Treatment Date is required",
+                            required:
+                              patientType === "OPD"
+                                ? "Treatment Date is required"
+                                : false,
                           })}
                           className={`form-control ${
                             errors.treatmentDate ? "is-invalid" : ""
@@ -411,15 +448,23 @@ const NewClaim = () => {
                         )}
                       </div>
                     )}
-                    {selectedPatient?.value === "IPD" && (
+                    {patientType === "IPD" && (
                       <>
-                        {" "}
                         <div className="form-floating col-lg-4 col-md-6">
                           <input
                             type="date"
+                            max={new Date().toISOString().split("T")[0]}
                             id="floatingInput"
+                            // {...register("claimAdmissionDate", {
+                            //   required: "Admission Date is required",
+                            //   onChange: handleAdmissionDateChange,
+                            // })}
                             {...register("claimAdmissionDate", {
-                              required: "Admission Date is required",
+                              required:
+                                patientType === "IPD"
+                                  ? "Admission Date is required"
+                                  : false,
+                              onChange: handleAdmissionDateChange,
                             })}
                             className={`form-control ${
                               errors.claimAdmissionDate ? "is-invalid" : ""
@@ -432,12 +477,33 @@ const NewClaim = () => {
                             </div>
                           )}
                         </div>
-                        <div className="form-floating col-lg-4 col-md-6">
+                        <div
+                          onClick={handleDischargeValidation}
+                          className="form-floating col-lg-4 col-md-6"
+                        >
                           <input
                             type="date"
+                            max={new Date().toISOString().split("T")[0]}
+                            min={
+                              admissionDate
+                                ? new Date(
+                                    new Date(admissionDate).setDate(
+                                      new Date(admissionDate).getDate() + 1
+                                    )
+                                  )
+                                    .toISOString()
+                                    .split("T")[0]
+                                : ""
+                            }
                             id="floatingInput"
+                            // {...register("claimDischargeDate", {
+                            //   required: "Discharge Date is required",
+                            // })}
                             {...register("claimDischargeDate", {
-                              required: "Discharge Date is required",
+                              required:
+                                patientType === "IPD"
+                                  ? "Discharge Date is required"
+                                  : false,
                             })}
                             className={`form-control ${
                               errors.claimDischargeDate ? "is-invalid" : ""
@@ -472,7 +538,7 @@ const NewClaim = () => {
                           {errors.IBANNo.message}
                         </div>
                       )}
-                      <button type="submit">
+                      <button type="button">
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">IBAN Number</label>
@@ -497,7 +563,7 @@ const NewClaim = () => {
                           {errors.accountNumber.message}
                         </div>
                       )}
-                      <button type="submit">
+                      <button type="button">
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Account Number</label>
@@ -522,7 +588,7 @@ const NewClaim = () => {
                           {errors.accountHolderName.message}
                         </div>
                       )}
-                      <button type="submit">
+                      <button type="button">
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Account Holder Name</label>
@@ -546,7 +612,7 @@ const NewClaim = () => {
                           {errors.bankName.message}
                         </div>
                       )}
-                      <button type="submit">
+                      <button type="button">
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Bank Name</label>
@@ -557,7 +623,7 @@ const NewClaim = () => {
                         id="floatingInput"
                         placeholder="Address"
                         {...register("address", {
-                          required: "Address is required",
+                          required: false,
                         })}
                         // className={`form-control ${
                         //   errors.address ? "is-invalid" : ""
@@ -570,7 +636,7 @@ const NewClaim = () => {
                           {errors.address.message}
                         </div>
                       )}
-                      <button type="submit">
+                      <button type="button">
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Address</label>
@@ -592,6 +658,10 @@ const NewClaim = () => {
                         Attach a File
                       </label>
                     </div>
+                    <p>
+                      <small>1. You can upload upto 5 files</small> <br />
+                      <small>2. Uploaded files size can be upto 10MB</small>
+                    </p>
                     <div className="col-lg-4 col-md-6 form-group mb-3 mt-2 position-relative">
                       {files.map((file, index) => (
                         <div key={index} className="row align-items-center">
@@ -638,10 +708,15 @@ const NewClaim = () => {
                       </div>
                     </div>
                     <div className="form-group col-md-12 text-center">
-                      <button type="submit" className="form_btns mt-2">
+                      <button
+                        type="submit"
+                        // onClick={() => console.log(tnc, errors)}
+                        // disabled={!isValid}
+                        className="form_btns mt-2"
+                      >
                         Submit
                       </button>
-                      <button type="reset" className="d-none">
+                      <button type="reset" id="reset" className="d-none">
                         reset
                       </button>
                     </div>

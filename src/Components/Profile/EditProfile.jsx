@@ -13,8 +13,8 @@ import BackBtn from "../../utils/BackBtn";
 
 const EditProfile = () => {
   const profileData = useSelector((state) => state?.user?.userData);
-  const [visible, setVisible] = useState(true);
-  const [visible2, setVisible2] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
 
   const {
     register: register2,

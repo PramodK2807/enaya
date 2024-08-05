@@ -24,7 +24,7 @@ const Topbar = () => {
 
   const [identityNumber, setIdentityNumber] = useState("2346518455");
   const [password, setPassword] = useState("12345");
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
 
   const userLogin = async (e) => {
@@ -367,7 +367,7 @@ const Topbar = () => {
                       <div className="form-floating col-md-12 position-relative">
                         <input
                           className="form-control"
-                          type={visible ? "password" : "text"}
+                          type={visible ? "text" : "password"}
                           placeholder="Password"
                           onChange={(e) => setPassword(e.target.value)}
                           value={password}

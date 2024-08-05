@@ -12,7 +12,7 @@ const HelpAndSupport = () => {
               <div className="row info_head align-items-center mb-md-3">
                 <div className="col d-flex align-items-center">
                   <Link>
-                    <img src="/assets/img/arrow-left1.png" alt='i' />
+                    <img src="/assets/img/arrow-left1.png" alt="i" />
                   </Link>
                   <h2>Help &amp; Support</h2>
                 </div>
@@ -20,66 +20,62 @@ const HelpAndSupport = () => {
             </div>
             <div className="col-md-12 mt-lg-3">
               <form action="#" className="row form_desig">
-                <div className="form-group col-lg-3 col-md-6">
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Family’s Members</option>
-                    <option value={1}>One</option>
-                    <option value={2}>Two</option>
-                    <option value={3}>Three</option>
-                  </select>
-                </div>
-                <div className="form-group col-lg-3 col-md-6">
+                <div className="form-floating col-lg-3 col-md-4">
                   <input
+                    type="email"
                     className="form-control"
-                    type="text"
+                    id="floatingInput"
                     placeholder="Full Name"
                   />
+                  <label htmlFor="floatingInput">Full Name</label>
                 </div>
-                <div className="form-group col-lg-3 col-md-6 position-relative edit_field">
+                <div className="form-floating col-lg-3 col-md-4 edit_field">
                   <input
+                    type="email"
                     className="form-control"
-                    type="text"
-                    name
-                    id
+                    id="floatingInput"
                     placeholder="E-Mail"
                   />
                   <button type="submit">
-                    <img src="/assets/img/editt.png" alt='i' />
+                    <img src="assets/img/editt.png" alt />
                   </button>
+                  <label htmlFor="floatingInput">E-Mail</label>
                 </div>
-                <div className="form-group col-lg-3 col-md-6 position-relative edit_field">
+                <div className="form-floating col-lg-3 col-md-4 edit_field">
                   <input
+                    type="email"
                     className="form-control"
-                    type="text"
-                    name
-                    id
+                    id="floatingInput"
                     placeholder="Phone Number"
                   />
+                  <label htmlFor="floatingInput">Phone Number</label>
                   <button type="submit">
-                    <img src="/assets/img/editt.png" alt='i' />
+                    <img src="assets/img/editt.png" alt />
                   </button>
                 </div>
-                <div className="form-group col-lg-3 col-md-6">
+                <div className="form-floating col-lg-3 col-md-4">
                   <input
+                    type="email"
                     className="form-control"
-                    type="text"
+                    id="floatingInput"
                     placeholder="ID Number"
                   />
+                  <label htmlFor="floatingInput">ID Number</label>
                 </div>
-                <div className="form-group col-lg-3 col-md-6">
+                <div className="form-floating col-lg-3 col-md-4">
                   <input
+                    type="email"
                     className="form-control"
-                    type="text"
+                    id="floatingInput"
                     placeholder="Member Number"
                   />
+                  <label htmlFor="floatingInput">Member Number</label>
                 </div>
-                <div className="form-group col-lg-3 col-md-6">
+                <div className="form-floating col-lg-3 col-md-4">
                   <select
                     className="form-select"
-                    aria-label="Default select example"
+                    id="floatingSelect"
+                    aria-label="Floating label select example"
                   >
                     <option selected>Family’s Members</option>
                     <option value={1}>One</option>
@@ -87,14 +83,15 @@ const HelpAndSupport = () => {
                     <option value={3}>Three</option>
                   </select>
                 </div>
-                <div className="form-group col-lg-6 col-md-6">
+                <div className="form-floating col-lg-9 col-md-6">
                   <textarea
                     className="form-control"
                     style={{ height: 100 }}
                     name
                     id
-                    defaultValue={"Type your note here..."}
+                    defaultValue={""}
                   />
+                  <label htmlFor="floatingInput">Type your note here...</label>
                 </div>
                 <div className="form-group col-lg-3 col-md-6 position-relative file_upload">
                   <input
@@ -105,14 +102,14 @@ const HelpAndSupport = () => {
                     placeholder="Address"
                   />
                   <label htmlFor="v">
-                    <img src="/assets/img/attech.png" alt='i' />
+                    <img src="assets/img/attech.png" alt />
                     Attach a File
                   </label>
                 </div>
                 <div className="form-group col-md-12 text-center mt-md-3">
-                  <button type="button" className="form_btns">
+                  <a href="javascript:;" className="form_btns">
                     Submit
-                  </button>
+                  </a>
                 </div>
               </form>
             </div>

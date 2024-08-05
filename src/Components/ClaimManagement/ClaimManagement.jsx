@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import ProfileModal from "../Profile/ProfileModal";
-import { ClaimList } from "../../AdminHttpServices/dashHttpServices";
+import {
+  ClaimList,
+  GetClaimDetails,
+} from "../../AdminHttpServices/dashHttpServices";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import BackBtn from "../../utils/BackBtn";
 import { addClaimList } from "../../app/slice/claimSlice";
+import moment from "moment";
+// import { Loader } from "rsuite";
+import { Loader } from "rsuite";
 
 const ClaimManagement = () => {
   const [claimsList, setClaimsList] = useState([]);
+  const [claimDetails, setClaimDetails] = useState([]);
   const userData = useSelector((state) => state?.user?.userData);
   const claimData = useSelector((state) => state?.claim?.claimListData);
   console.log(claimData);
+  const [claimDetailsLoading, setClaimDetailsLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   getClaims();
+  // }, []);
 
   useEffect(() => {
     if (claimData?.length) {
@@ -38,6 +50,26 @@ const ClaimManagement = () => {
       }
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getClaimDetails = async (id) => {
+    try {
+      setClaimDetailsLoading(true);
+      let payload = {
+        IdentityNo: userData?.InsuranceNumber,
+        PolicyNo: userData?.PolicyNo,
+        MemberNo: userData?.Memberno,
+        ClaimNo: id,
+      };
+      let { data } = await GetClaimDetails(payload);
+      if (data && !data?.error) {
+        setClaimDetails(data?.ClaimDetails);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setClaimDetailsLoading(false);
     }
   };
   return (
@@ -90,6 +122,22 @@ const ClaimManagement = () => {
                                       {claim?.CLAIMINCURREDDATE?.split("T")[1]}
                                     </span>
                                   </div>
+                                  <div className="actions_btns">
+                                    <a
+                                      type="button"
+                                      data-bs-toggle="modal"
+                                      data-bs-target="#forgotpassword"
+                                      className="forgotpassword mt-0"
+                                      alt="i"
+                                      onClick={() =>
+                                        getClaimDetails(claim?.CLAIMREFERENCE)
+                                      }
+                                    >
+                                      <img src="/assets/img/view.png" alt="i" />{" "}
+                                      View
+                                    </a>
+                                  </div>
+
                                   {/* <div className="actions_btns">
                                     <Link to={"/"}>
                                       <img src="/assets/img/view.png" alt="i" />{" "}
@@ -128,6 +176,103 @@ const ClaimManagement = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="modal fade claim_modal"
+          id="forgotpassword"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabIndex={-1}
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-body">
+                <button
+                  type="button"
+                  className="btn-close float-end"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                />
+
+                {claimDetailsLoading && (
+                  <div style={{ padding: "20px", textAlign: "center" }}>
+                    <Loader backdrop content="loading..." vertical />
+                  </div>
+                )}
+                {!claimDetailsLoading && (
+                  <div>
+                    <div className="row justify-content-between claim_content">
+                      <div className="col-6">
+                        <p className="claim_details_title">Reference Number</p>
+                        <p>{claimDetails?.ReferenceNo || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">Treatment Type</p>
+                        <p>{claimDetails?.treatmentType || "NA"}</p>
+                      </div>
+
+                      <div className="col-6">
+                        <p className="claim_details_title">Member Number</p>
+                        <p>{claimDetails?.memberNo || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">Claim Status</p>
+                        <p>{claimDetails?.claimstatus || "NA"}</p>
+                      </div>
+
+                      <div className="col-6">
+                        <p className="claim_details_title">Claim Number</p>
+                        <p>{claimDetails?.claimno || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">Claim Type</p>
+                        <p>{claimDetails?.claimType || "NA"}</p>
+                      </div>
+
+                      <div className="col-12">
+                        <p className="claim_details_title">Hospital Name</p>
+                        <p>{claimDetails?.hospitalName || "NA"}</p>
+                      </div>
+                      <div className="col-12">
+                        <p className="claim_details_title">Basic Diagnosis</p>
+                        <p>{claimDetails?.basicDiagnosis || "NA"}</p>
+                      </div>
+
+                      <div className="col-6">
+                        <p className="claim_details_title">Treatment Type</p>
+                        <p>{claimDetails?.treatmentType || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">Treatment Date</p>
+                        <p>{moment(claimDetails?.treatment || "NA").format("L")}</p>
+                      </div>
+
+                      <div className="col-6">
+                        <p className="claim_details_title">Requested Amount</p>
+                        <p>{claimDetails?.RequestedAmount || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">Approved Amount</p>
+                        <p>{claimDetails?.ApprovedAmount || "NA"}</p>
+                      </div>
+
+                      <div className="col-6">
+                        <p className="claim_details_title">Bank Name</p>
+                        <p>{claimDetails?.bankName || "NA"}</p>
+                      </div>
+                      <div className="col-6">
+                        <p className="claim_details_title">IBAN Number</p>
+                        <p>{claimDetails?.IBANNo || "NA"}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

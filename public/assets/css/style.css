@@ -4920,3 +4920,15 @@ body {
 .otp_box input[type=number] {
   -moz-appearance: textfield;
 }
+.claim_modal, p{
+margin: 0 !important;
+padding: 0 !important;
+}
+.claim_modal .claim_content div{
+  margin-bottom: 8px;
+/* border-bottom: 1px solid #6f6d6d; */
+}
+.claim_modal .claim_details_title{
+  color: #6f6d6d !important;
+
+}

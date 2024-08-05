@@ -16,11 +16,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-  const [identityNumber, setIdentityNumber] = useState("2346518455");
-  const [password, setPassword] = useState("12345");
+  const [identityNumber, setIdentityNumber] = useState("");
+  const [password, setPassword] = useState("");
+  // const [identityNumber, setIdentityNumber] = useState("2346518455");
+  // const [password, setPassword] = useState("12345");
   const [forgotPassApiData, setForgotPassApiData] = useState();
-  const [visible, setVisible] = useState(true);
-  const [visible2, setVisible2] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -201,7 +203,7 @@ const Login = () => {
                   <div className="form-floating col-md-12 position-relative">
                     <input
                       className="form-control"
-                      type={visible ? "password" : "text"}
+                      type={visible ? "text" : "password"}
                       placeholder="Password"
                       onChange={(e) => setPassword(e.target.value)}
                       value={password}

@@ -207,6 +207,11 @@ const RegisterComplaint = () => {
     }
   };
 
+  const removeFile = (index) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    setFiles(newFiles);
+  };
+
   return (
     <Layout>
       <>
@@ -385,6 +390,17 @@ const RegisterComplaint = () => {
                     />
                     <label htmlFor="floatingInput">Member Number</label>
                   </div>
+                  <div className="form-floating col-lg-4 col-md-6">
+                    <textarea
+                      className="form-control"
+                      style={{ height: 100 }}
+                      name="notes"
+                      id="notes"
+                      value={notes}
+                      onChange={(e) => setNotes(e.target.value)}
+                    />
+                    <label htmlFor="notes">Type your note here...</label>
+                  </div>
                   <div className="form-group col-lg-4 col-md-6 position-relative file_upload">
                     <input
                       className="form-control d-none"
@@ -400,18 +416,40 @@ const RegisterComplaint = () => {
                       <img src="/assets/img/attech.png" alt />
                       Attach a File
                     </label>
+                    <p>
+                      <small>1. You can upload upto 5 files</small> <br />
+                      <small>2. Uploaded files size can be upto 10MB</small>
+                    </p>
                   </div>
-                  <div className="form-floating col-lg-9 col-md-6">
-                    <textarea
-                      className="form-control"
-                      style={{ height: 100 }}
-                      name="notes"
-                      id="notes"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                    />
-                    <label htmlFor="notes">Type your note here...</label>
-                  </div>
+                  <div className="col-lg-4 col-md-6 form-group mb-3 mt-2 position-relative">
+                      {files.map((file, index) => (
+                        <div key={index} className="row align-items-center">
+                          <div className="col-2">
+                            <img
+                              className="pdfupload"
+                              src="/assets/img/PDF.png"
+                              alt="PDF"
+                            />
+                          </div>
+                          <div className="col-8 px-0">
+                            <div className="pdfupload_box">
+                              <label className=" text-truncate w-100">
+                                {file.name}
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-2">
+                            <img
+                              className="cut"
+                              src="/assets/img/cut.png"
+                              alt="Remove"
+                              onClick={() => removeFile(index)}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  
                   <div className="form-group col-md-12 text-center mt-md-3">
                     <button type="submit" className="form_btns">
                       Submit

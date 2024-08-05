@@ -70,11 +70,11 @@ const Footer = () => {
             <div className="footer_links">
               <h3>Services</h3>
               <div className="mainlinks">
-                <a href="javascrpt:;">Broker Portal</a>
-                <a href="javascript:;">Endorsement Portal</a>
-                <a href="javascript:;">Mobile App</a>
-                <a href="javascript:;">Visa Insurance</a>
-                <a href="javascript:;">Print Insurance Certificate</a>
+                <Link to={'/our-services/broker-portal'}>Broker Portal</Link>
+                <Link to={'/our-services/endorsement-portal'}>Endorsement Portal</Link>
+                <Link to={'/our-services/mobile-app'}>Mobile App</Link>
+                <Link to={'/our-services/visit-visa-extension'}>Visa Insurance</Link>
+                {/* <Link to={'/our-services/'}>Print Insurance Certificate</Link> */}
               </div>
             </div>
           </div>
