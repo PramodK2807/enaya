@@ -290,7 +290,9 @@ const NewClaim = () => {
                     <div className="form-floating col-lg-4 col-md-6">
                       <select
                         // className="form-select"
-                        className="form-select"
+                        className={`form-select ${
+                          errors.country ? "is-invalid" : ""
+                        }`}
                         {...register("country", {
                           required: "Please select a country",
                         })}
