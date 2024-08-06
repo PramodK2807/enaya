@@ -289,9 +289,7 @@ const NewClaim = () => {
                   >
                     <div className="form-floating col-lg-4 col-md-6">
                       <select
-                        // className={`form-select ${
-                        //   errors.country ? "is-invalid" : ""
-                        // }`}
+                        // className="form-select"
                         className="form-select"
                         {...register("country", {
                           required: "Please select a country",
@@ -299,13 +297,13 @@ const NewClaim = () => {
                         id="floatingSelect"
                         aria-label="Floating label select example"
                       >
-                        {/* <option value="">Select a country</option> */}
+                        <option value="">Select a country</option>
                         {countryList &&
                           countryList?.map((item) => (
                             <option
                               key={item?.CountryCode}
                               value={item?.CountryCode}
-                              selected={item?.CountryCode === 966}
+                              // selected={item?.CountryCode === 966}
                             >
                               {item?.CountryName}
                             </option>

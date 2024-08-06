@@ -23,17 +23,17 @@ const ClaimManagement = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   getClaims();
-  // }, []);
-
   useEffect(() => {
-    if (claimData?.length) {
-      setClaimsList(claimData);
-    } else {
-      getClaims();
-    }
+    getClaims();
   }, []);
+
+  // useEffect(() => {
+  //   if (claimData?.length) {
+  //     setClaimsList(claimData);
+  //   } else {
+  //     getClaims();
+  //   }
+  // }, []);
 
   const getClaims = async () => {
     try {
