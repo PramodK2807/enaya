@@ -173,6 +173,18 @@ const RegisterComplaint = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (!profileData?.details?.Email || !profileData?.details?.PhoneNumber) {
+        Swal.fire({
+          toast: true,
+          icon: "warning",
+          position: "top-end",
+          title: "Email or Phone Number is mandatory",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        return;
+      }
       const formData = new FormData();
       formData.append("RequestTypeId", selectedComplaintType);
       formData.append("CategoryTypeId", selectedCategory);
@@ -340,32 +352,43 @@ const RegisterComplaint = () => {
                     />
                     <label htmlFor="floatingInput">Full Name</label>
                   </div>
-                  <div className="form-floating col-lg-4 col-md-6 position-relative edit_field">
+                  <div className="form-floating col-lg-4 col-md-6">
                     <input
                       type="email"
                       className="form-control"
                       id="floatingInput"
-                      placeholder="E-Mail"
-                      value={profileData?.details?.Email}
-                      disabled
+                      placeholder="name@example.com"
+                      value={profileData?.details?.Email || ""}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          details: {
+                            ...profileData.details,
+                            Email: e.target.value,
+                          },
+                        })
+                      }
                     />
-                    <button type="button">
-                      <img src="/assets/img/editt.png" alt />
-                    </button>
-                    <label htmlFor="floatingInput">E-Mail</label>
+                    <label htmlFor="floatingInput">Email</label>
                   </div>
-                  <div className="form-floating col-lg-4 col-md-6 position-relative edit_field">
+
+                  <div className="form-floating col-lg-4 col-md-6">
                     <input
                       type="text"
                       className="form-control"
                       id="floatingInput"
-                      placeholder="Phone Number"
-                      value={profileData?.details?.PhoneNumber}
-                      disabled
+                      placeholder="name@example.com"
+                      value={profileData?.details?.PhoneNumber || ""}
+                      onChange={(e) =>
+                        setProfileData({
+                          ...profileData,
+                          details: {
+                            ...profileData.details,
+                            PhoneNumber: e.target.value,
+                          },
+                        })
+                      }
                     />
-                    <button type="button">
-                      <img src="/assets/img/editt.png" alt />
-                    </button>
                     <label htmlFor="floatingInput">Phone Number</label>
                   </div>
                   <div className="form-floating col-lg-4 col-md-6">
@@ -422,34 +445,34 @@ const RegisterComplaint = () => {
                     </p>
                   </div>
                   <div className="col-lg-4 col-md-6 form-group mb-3 mt-2 position-relative">
-                      {files.map((file, index) => (
-                        <div key={index} className="row align-items-center">
-                          <div className="col-2">
-                            <img
-                              className="pdfupload"
-                              src="/assets/img/PDF.png"
-                              alt="PDF"
-                            />
-                          </div>
-                          <div className="col-8 px-0">
-                            <div className="pdfupload_box">
-                              <label className=" text-truncate w-100">
-                                {file.name}
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-2">
-                            <img
-                              className="cut"
-                              src="/assets/img/cut.png"
-                              alt="Remove"
-                              onClick={() => removeFile(index)}
-                            />
+                    {files.map((file, index) => (
+                      <div key={index} className="row align-items-center">
+                        <div className="col-2">
+                          <img
+                            className="pdfupload"
+                            src="/assets/img/PDF.png"
+                            alt="PDF"
+                          />
+                        </div>
+                        <div className="col-8 px-0">
+                          <div className="pdfupload_box">
+                            <label className=" text-truncate w-100">
+                              {file.name}
+                            </label>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  
+                        <div className="col-2">
+                          <img
+                            className="cut"
+                            src="/assets/img/cut.png"
+                            alt="Remove"
+                            onClick={() => removeFile(index)}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="form-group col-md-12 text-center mt-md-3">
                     <button type="submit" className="form_btns">
                       Submit
@@ -485,17 +508,21 @@ const RegisterComplaint = () => {
                           <>
                             <div className="bg-light my-3 p-2 border rounded">
                               <div className="d-flex align-items-center justify-content-between">
-                                <div>{item?.TicketId}</div>
+                                <div>
+                                  <small>TicketId: </small>
+                                  <small>{item?.TicketId}</small>
+                                </div>
                                 <div className="bg-success text-white rounded-pill px-3 py-1">
-                                  {item?.TicketStatus}
+                                  <small>{item?.TicketStatus}</small>
                                 </div>
                               </div>
                               <div>
                                 <div className="fw-bold text-start">
-                                  {item?.TicketDescription}
+                                  <small>{item?.TicketDescription}</small>
                                 </div>
                                 <div className="text-start">
-                                  {item?.TicketDateTime}
+                                  <small>Date: </small>
+                                  <small> {item?.TicketDateTime}</small>
                                 </div>
                               </div>
                             </div>

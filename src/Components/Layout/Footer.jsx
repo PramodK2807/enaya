@@ -15,23 +15,33 @@ const Footer = () => {
                 Saudi Enaya Cooperative Insurance Company, A Joint Stock Company
                 With A Capital Of SR 230,000,000.
               </p>
-              <div className="social_iconss">
+              <div className="social_iconss mt-2">
                 {/* <a href="javascript:;"><img src="/assets/img/Facebook.png" alt=""></a> */}
-                <a target="_blank" href="https://x.com/SaudiEnayaCo?mx=2">
-                  <img src="/assets/img/Twitter.png" alt />
+
+                <a
+                  target="_blank"
+                  href="https://x.com/SaudiEnayaCo?mx=2"
+                  className="social_logo"
+                >
+                  <i className="fa-brands fa-x-twitter" />
                 </a>
                 <a
                   target="_blank"
                   href="https://www.instagram.com/saudienayaco/"
+                  className="social_logo"
                 >
-                  <img src="/assets/img/Instagram.png" alt />
+                  {/* <img src="assets/img/Instagram.png" alt /> */}
+                  <i class="fa-brands fa-instagram"></i>
                 </a>
                 <a
                   target="_blank"
                   href="https://www.linkedin.com/company/saudienayaco"
+                  className="social_logo"
                 >
-                  <img src="/assets/img/LinkedIn.png" alt />
+                  {/* <img src="assets/img/LinkedIn.png" alt /> */}
+                  <i class="fa-brands fa-linkedin"></i>
                 </a>
+
                 {/* <a href="javascript:;"><img src="/assets/img/YouTube.png" alt=""></a> */}
               </div>
             </div>
@@ -39,13 +49,16 @@ const Footer = () => {
           <div className="col-lg-3 col-md-6 mb-lg-0 mb-md-5 mb-4">
             <div className="footer_links">
               <h3>Contact Us</h3>
-              <a href="javascript:;" className="footer_details mb-3">
+              <a
+                href="mailto:info@saudienaya.com"
+                className="footer_details mb-3"
+              >
                 <span>
                   <img src="/assets/img/mail-open-fill.svg" alt />
-                </span>{" "}
+                </span>
                 <div>info@saudienaya.com</div>
               </a>
-              <a href="javascript:;" className="footer_details  mb-3">
+              <p className="footer_details  mb-3">
                 <span>
                   <img src="/assets/img/map-pin-fill.svg" alt />
                 </span>{" "}
@@ -53,13 +66,13 @@ const Footer = () => {
                   3730 Prince Saud Al Faisal, Al Khalidiyah District, Jeddah
                   23423
                 </div>
-              </a>
-              <a href="javascript:;" className="footer_details  mb-3">
+              </p>
+              <p className="footer_details  mb-3">
                 <span>
                   <img src="/assets/img/map-pin-fill.svg" alt />
                 </span>{" "}
                 <div>7387 Thumamah Road, Ar Rabi, Riyadh 13315 </div>
-              </a>
+              </p>
               <div className="working_hours mt-3">
                 <strong>Working Hours</strong>
                 <span>8:00 am to 5:00 pm</span>
@@ -70,10 +83,14 @@ const Footer = () => {
             <div className="footer_links">
               <h3>Services</h3>
               <div className="mainlinks">
-                <Link to={'/our-services/broker-portal'}>Broker Portal</Link>
-                <Link to={'/our-services/endorsement-portal'}>Endorsement Portal</Link>
-                <Link to={'/our-services/mobile-app'}>Mobile App</Link>
-                <Link to={'/our-services/visit-visa-extension'}>Visa Insurance</Link>
+                <Link to={"/our-services/broker-portal"}>Broker Portal</Link>
+                <Link to={"/our-services/endorsement-portal"}>
+                  Endorsement Portal
+                </Link>
+                <Link to={"/our-services/mobile-app"}>Mobile App</Link>
+                <Link to={"/our-services/visit-visa-extension"}>
+                  Visa Insurance
+                </Link>
                 {/* <Link to={'/our-services/'}>Print Insurance Certificate</Link> */}
               </div>
             </div>
@@ -82,12 +99,27 @@ const Footer = () => {
             <div className="footer_links">
               <h3>Download our app</h3>
               <div className="appdownload_btn">
-                <a href="javascript:;">
-                  <img src="/assets/img/google-play.svg" alt />
-                </a>
-                <a href="javascript:;">
-                  <img src="/assets/img/app-store.svg" alt />
-                </a>
+                <Link
+                  target="_blank"
+                  to="https://apps.apple.com/us/app/saudi-enaya/id6503640454"
+                  className="rounded"
+                >
+                  <img
+                    className="rounded"
+                    src="/assets/img/appstrore.png"
+                    alt="app"
+                  />
+                </Link>
+                <Link
+                  target="_blank"
+                  to="https://play.google.com/store/apps/details?id=com.saudi.enaya"
+                >
+                  <img
+                    className="rounded"
+                    src="/assets/img/google.png"
+                    alt="google"
+                  />
+                </Link>
               </div>
               <div className="ourexpert">
                 <div className="experticon">

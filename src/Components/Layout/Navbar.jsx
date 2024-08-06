@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [openSubMenus, setOpenSubMenus] = useState("");
   return (
     <header className="header_main">
       <div className="container">
@@ -189,10 +190,17 @@ const Navbar = () => {
                       </Link>
                     </div>
                     <div className="mobilemenus_box">
-                      <a className="mobile_link droparrow" href="javscript:;">
+                      <a
+                        className="mobile_link droparrow"
+                        onClick={() => setOpenSubMenus("Our Products")}
+                      >
                         Our Products
                       </a>
-                      <div className="menus_boxinner">
+                      <div
+                        className={`menus_boxinner ${
+                          openSubMenus === "Our Products" ? "d-block" : "d-none"
+                        }`}
+                      >
                         <ul className="menus_ul">
                           <li>
                             <a href="javascript:;">Visit Visa</a>
@@ -210,10 +218,17 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div className="mobilemenus_box">
-                      <a className="mobile_link droparrow" href="javscript:;">
+                      <a
+                        className="mobile_link droparrow"
+                        onClick={() => setOpenSubMenus("Services")}
+                      >
                         E-Services
                       </a>
-                      <div className="menus_boxinner">
+                      <div
+                        className={`menus_boxinner ${
+                          openSubMenus === "Services" ? "d-block" : "d-none"
+                        }`}
+                      >
                         <ul className="menus_ul">
                           <li>
                             <a href="javascript:;">Broker Portal</a>
@@ -241,10 +256,17 @@ const Navbar = () => {
                       </a>
                     </div>
                     <div className="mobilemenus_box">
-                      <a className="mobile_link droparrow" href="javscript:;">
+                      <a
+                        className="mobile_link droparrow"
+                        onClick={() => setOpenSubMenus("Contact Us")}
+                      >
                         Contact Us
                       </a>
-                      <div className="menus_boxinner">
+                      <div
+                        className={`menus_boxinner ${
+                          openSubMenus === "Contact Us" ? "d-block" : "d-none"
+                        }`}
+                      >
                         <ul className="menus_ul">
                           <li>
                             <a href="javascript:;">

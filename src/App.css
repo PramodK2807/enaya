@@ -88,3 +88,18 @@ body.swal2-toast-shown .swal2-container.swal2-top-right {
 .notification_modal.show {
   right: 0px; /* End position on screen */
 }
+
+.social_logo {
+  width: 24px;
+  text-align: center;
+  padding: 2px 4px;
+  line-height: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: #045DA7;
+}
+.social_logo i {
+  font-size: 16px;
+  font-weight: 900;
+  color: white;
+}

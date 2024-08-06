@@ -584,7 +584,8 @@ h6 {
   font-size: 16px;
   font-weight: 400;
   box-shadow: unset;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
+  padding: 10px 40px 10px 20px;
   background-image: url(../img/angel.png);
   position: relative;
   background-size: auto;
@@ -3340,6 +3341,9 @@ h6 {
 }
 
 @media (max-width:1023px) {
+  .slick-dots{
+    display: none !important;
+  }
   .auth_page_content h1 {
       font-size: 40px;
       font-weight: 700;
@@ -3424,7 +3428,7 @@ h6 {
     width: 100%;
     order: -1;
     height: 310px;
-    z-index: 9;
+    z-index: 1;
     padding-top: 30px;
 }
   .bannerslider_main {
