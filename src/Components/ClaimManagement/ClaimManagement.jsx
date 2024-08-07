@@ -14,6 +14,7 @@ import moment from "moment";
 import { Loader } from "rsuite";
 
 const ClaimManagement = () => {
+  const [loading, setLoading] = useState(false);
   const [claimsList, setClaimsList] = useState([]);
   const [claimDetails, setClaimDetails] = useState([]);
   const userData = useSelector((state) => state?.user?.userData);
@@ -37,6 +38,7 @@ const ClaimManagement = () => {
 
   const getClaims = async () => {
     try {
+      setLoading(true);
       let payload = {
         IdentityNo: userData?.InsuranceNumber,
         PolicyNo: userData?.PolicyNo,
@@ -50,6 +52,8 @@ const ClaimManagement = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -100,7 +104,8 @@ const ClaimManagement = () => {
                 </div> */}
                 <div className="col-md-12">
                   <div className="row">
-                    {claimsList && claimsList.length > 0 ? (
+                    {claimsList &&
+                      claimsList.length > 0 &&
                       claimsList?.map((claim, i) => (
                         <>
                           <div className="col-md-6 mb-4">
@@ -161,9 +166,10 @@ const ClaimManagement = () => {
                             </div>
                           </div>
                         </>
-                      ))
-                    ) : (
-                      <p className="text-center">No Claims Found</p>
+                      ))}
+
+                    {loading && (
+                      <p className="text-center my-5">Loading ... </p>
                     )}
 
                     <div className="col-md-12 text-center">
@@ -250,7 +256,9 @@ const ClaimManagement = () => {
                       </div>
                       <div className="col-6">
                         <p className="claim_details_title">Treatment Date</p>
-                        <p>{moment(claimDetails?.treatment || "NA").format("L")}</p>
+                        <p>
+                          {moment(claimDetails?.treatment || "NA").format("L")}
+                        </p>
                       </div>
 
                       <div className="col-6">

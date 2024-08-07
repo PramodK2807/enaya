@@ -86,6 +86,7 @@ const Banner = () => {
               logoPath={"assets/img/sme.png"}
               data_aos={"fade-right"}
               customStyle={"sme_box"}
+              navigation={'/sme-plan'}
             />
             <Card1
               title={"Corporate"}
@@ -93,6 +94,7 @@ const Banner = () => {
               logoPath={"assets/img/Corporate.png"}
               data_aos={"fade-up"}
               customStyle={"sme_box"}
+              navigation={'/corporate-plan'}
             />
             <Card1
               title={"Get Insured"}

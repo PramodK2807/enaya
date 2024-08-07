@@ -289,7 +289,9 @@ const Topbar = () => {
                         data-bs-target="#MyAccount"
                         href="javascript:;"
                       >
-                        <img src="assets/img/account.png" alt="" /> My Account
+                        {/* <img src="assets/img/account.png" alt="" />  */}
+                        <i class="fa-regular fa-circle-user fs-5 me-2"></i>
+                        My Account
                       </a>
                     </div>
                   )}

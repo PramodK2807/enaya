@@ -12,7 +12,7 @@ const ProtectedRoutes = ({ children }) => {
     Swal.fire({
       icon: "warning",
       title: "Please Login",
-      text: "Token expired please login again",
+      text: "Click on My Account to login",
       showConfirmButton: false,
       timer: 2500,
     });

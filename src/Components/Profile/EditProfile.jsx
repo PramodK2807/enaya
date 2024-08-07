@@ -15,12 +15,12 @@ const EditProfile = () => {
   const profileData = useSelector((state) => state?.user?.userData);
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const {
     register: register2,
     handleSubmit: handleSubmit2,
-    formState: { errors: errors2 },
+    formState: { errors: errors2, isValid },
   } = useForm({ mode: "onChange" });
 
   const { state } = useLocation();
@@ -68,7 +68,7 @@ const EditProfile = () => {
           timerProgressBar: true,
           timer: 3000,
         });
-        navigate('/profile')
+        navigate("/profile");
       }
     } catch (error) {
       console.log(error);
@@ -155,10 +155,11 @@ const EditProfile = () => {
                         <input
                           type="number"
                           placeholder="National ID/Iqama ID"
-                          className="form-control"
-                          value={state?.NationalId}
+                          classname="form-control"
+                          defaultValue="{state?.NationalId}"
                           disabled
                         />
+
                         <label htmlFor="floatingInput">
                           National ID/Iqama ID
                         </label>
@@ -292,7 +293,11 @@ const EditProfile = () => {
                         )}
                       </div>
                       <div className="form-floating col-md-12 text-center mt-md-3">
-                        <button type="submit" className="form_btns">
+                        <button
+                          disabled={!isValid}
+                          type="submit"
+                          className="form_btns"
+                        >
                           Save Changes
                         </button>
                       </div>

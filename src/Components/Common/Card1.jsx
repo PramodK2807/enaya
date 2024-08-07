@@ -8,11 +8,15 @@ const Card1 = ({
   logoPath,
   bgImage,
   customStyle,
+  navigation,
 }) => {
   return (
     <>
-      <div className="col-md-4 d-flex align-items-stretch mb-md-0 mb-4">
-        <Link
+      <Link
+        to={navigation}
+        className="col-md-4 d-flex align-items-stretch mb-md-0 mb-4"
+      >
+        <div
           style={{ backgroundImage: bgImage }}
           className={`${customStyle} w-100`}
           data-aos={data_aos}
@@ -20,8 +24,8 @@ const Card1 = ({
           <img className="icon_sme" src={logoPath} alt="i" />
           <h2>{title}</h2>
           <p>{description}</p>
-        </Link>
-      </div>
+        </div>
+      </Link>
     </>
   );
 };
