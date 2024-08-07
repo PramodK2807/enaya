@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../Layout/Layout";
 import ProfileModal from "./ProfileModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   UpdatePassword,
   UpdateProfileDetails,
@@ -15,6 +15,7 @@ const EditProfile = () => {
   const profileData = useSelector((state) => state?.user?.userData);
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const navigate = useNavigate()
 
   const {
     register: register2,
@@ -67,6 +68,7 @@ const EditProfile = () => {
           timerProgressBar: true,
           timer: 3000,
         });
+        navigate('/profile')
       }
     } catch (error) {
       console.log(error);
@@ -276,6 +278,10 @@ const EditProfile = () => {
                           }`}
                           {...register("IBANNumber", {
                             required: "Please enter IBAN Number",
+                            pattern: {
+                              value: /^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,31}$/,
+                              message: "Please enter a valid IBAN Number",
+                            },
                           })}
                         />
                         <label htmlFor="floatingIBANNumber">IBAN Number</label>

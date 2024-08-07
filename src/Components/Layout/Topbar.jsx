@@ -7,10 +7,15 @@ import Swal from "sweetalert2";
 import {
   adminLogin,
   ForgotPasswordApi,
+  ProfileDetails,
   ResetPassword,
   VerifyOTPToRestPassword,
 } from "../../AdminHttpServices/LoginHttpsService";
-import { addCardDetails, addUserInfo } from "../../app/slice/userInfoSlice";
+import {
+  addCardDetails,
+  addMoreInfoAboutUser,
+  addUserInfo,
+} from "../../app/slice/userInfoSlice";
 import { useForm } from "react-hook-form";
 
 const ls = new SecureLS();
@@ -54,8 +59,26 @@ const Topbar = () => {
         document.getElementById("closeLoginModal").click();
         await dispatch(addUserInfo(data?.CardDetails[0]));
         await dispatch(addCardDetails(data?.CardDetails));
-        navigate("/profile");
+        await getProfileDetails();
         ls.set("enaya-token", data?.token);
+        // navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getProfileDetails = async () => {
+    try {
+      const payload = {
+        IdentityNo: userData?.InsuranceNumber,
+        PolicyNo: userData?.PolicyNo,
+        MemberNo: userData?.Memberno,
+      };
+      let { data } = await ProfileDetails(payload);
+      if (data && !data?.error) {
+        // setUserDetailsData(data?.profileDetails);
+        await dispatch(addMoreInfoAboutUser(data?.profileDetails));
       }
     } catch (error) {
       console.log(error);
