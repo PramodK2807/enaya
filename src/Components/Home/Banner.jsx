@@ -1,6 +1,7 @@
 import React from "react";
 import Card1 from "../Common/Card1";
 import Slider from "react-slick";
+import { Link } from "react-router-dom";
 
 const Banner = () => {
   var settings = {
@@ -11,7 +12,7 @@ const Banner = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows:false,
+    arrows: false,
     // dots:false,
   };
   return (
@@ -33,9 +34,9 @@ const Banner = () => {
                       <li>SME Plans</li>
                       <li>Visa Insurance</li>
                     </ul>
-                    <a className="banner_btn" href="smeplan.html">
+                    <Link className="banner_btn" to="/get-quote">
                       Get a Quote
-                    </a>
+                    </Link>
                   </div>
                   <div className="bannerbox_inner">
                     <h1>Insurance for your business and team</h1>
@@ -48,9 +49,9 @@ const Banner = () => {
                       <li>SME Plans</li>
                       <li>Visa Insurance</li>
                     </ul>
-                    <a className="banner_btn" href="smeplan.html">
+                    <Link className="banner_btn" to="/get-quote">
                       Get a Quote
-                    </a>
+                    </Link>
                   </div>
                   <div className="bannerbox_inner">
                     <h1>Insurance for your business and team</h1>
@@ -63,15 +64,15 @@ const Banner = () => {
                       <li>SME Plans</li>
                       <li>Visa Insurance</li>
                     </ul>
-                    <a className="banner_btn" href="smeplan.html">
+                    <Link className="banner_btn" to="/get-quote">
                       Get a Quote
-                    </a>
+                    </Link>
                   </div>
                 </Slider>
               </div>
             </div>
             <div className="bannerbox_right">
-              <img src="/assets/img/Homepage.jpg" alt='i' />
+              <img src="/assets/img/Homepage.jpg" alt="i" />
             </div>
           </div>
         </div>

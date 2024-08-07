@@ -184,7 +184,8 @@ const Topbar = () => {
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                           >
-                            <img src="/assets/img/account.png" alt="" />{" "}
+                            {/* <img src="/assets/img/account.png" alt="" />{" "} */}
+                            <i class="fa-regular fa-circle-user fs-5 me-2"></i>
                             <span className="text-white text-nowrap">
                               My Account
                             </span>

@@ -544,7 +544,7 @@ const NewClaim = () => {
                       <label htmlFor="floatingInput">IBAN Number</label>
                     </div>
 
-                    <div className="form-floating col-lg-4 col-md-6 position-relative edit_field">
+                    {/* <div className="form-floating col-lg-4 col-md-6 position-relative edit_field">
                       <input
                         type="text"
                         id="floatingInput"
@@ -567,7 +567,7 @@ const NewClaim = () => {
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Account Number</label>
-                    </div>
+                    </div> */}
 
                     <div className="form-floating col-lg-4 col-md-6 position-relative edit_field">
                       <input
@@ -617,7 +617,8 @@ const NewClaim = () => {
                       </button>
                       <label htmlFor="floatingInput">Bank Name</label>
                     </div>
-                    <div className="form-floating col-md-6 position-relative edit_field">
+
+                    {/* <div className="form-floating col-md-6 position-relative edit_field">
                       <input
                         type="text"
                         id="floatingInput"
@@ -640,7 +641,7 @@ const NewClaim = () => {
                         <img src="/assets/img/editt.png" alt="i" />
                       </button>
                       <label htmlFor="floatingInput">Address</label>
-                    </div>
+                    </div> */}
 
                     <div className="col-md-6 form-group mb-3 position-relative file_upload">
                       <input

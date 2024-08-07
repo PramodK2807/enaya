@@ -22,7 +22,7 @@ const SmePlan = () => {
                     security of your SME. Discover the perfect insurance
                     solution tailored to fit your needs.
                   </p>
-                  <a className="plan_btn" href="javscript:;">
+                  <a className="plan_btn mt-3" href="javscript:;">
                     Get Insured
                   </a>
                 </div>
