@@ -13,8 +13,8 @@ const ProtectedRoutes = ({ children }) => {
       icon: "warning",
       title: "Please Login",
       text: "Click on My Account to login",
-      showConfirmButton: false,
-      timer: 2500,
+      showConfirmButton: true,
+      timer: false,
     });
     return <Navigate to="/" state={{ from: location }} replace />;
   }

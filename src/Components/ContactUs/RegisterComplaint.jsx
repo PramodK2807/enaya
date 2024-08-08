@@ -130,55 +130,44 @@ const RegisterComplaint = () => {
     setFiles([...currentFiles, ...newFiles]);
   };
 
-  // const handleFileChange = (e) => {
-  //   const newFiles = Array.from(e.target.files);
-  //   let totalFileSize = newFiles.reduce((acc, file) => acc + file.size, 0);
-
-  //   if (
-  //     files.length === 0 &&
-  //     newFiles.length === 1 &&
-  //     newFiles[0].size > 5 * 1024 * 1024
-  //   ) {
-  //     Swal.fire({
-  //       toast: true,
-  //       icon: "warning",
-  //       position: "top-end",
-  //       title: "Single file size exceeds 5MB limit",
-  //       showConfirmButton: false,
-  //       timerProgressBar: true,
-  //       timer: 3000,
-  //     });
-  //     return;
-  //   }
-
-  //   const combinedFiles = [...files, ...newFiles];
-  //   totalFileSize += files.reduce((acc, file) => acc + file.size, 0);
-
-  //   if (combinedFiles.length > 1 && totalFileSize > 10 * 1024 * 1024) {
-  //     Swal.fire({
-  //       toast: true,
-  //       icon: "warning",
-  //       position: "top-end",
-  //       title: "Total file size exceeds 10MB limit",
-  //       showConfirmButton: false,
-  //       timerProgressBar: true,
-  //       timer: 3000,
-  //     });
-  //     return;
-  //   }
-
-  //   setFiles(combinedFiles);
-  // };
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!profileData?.details?.Email || !profileData?.details?.PhoneNumber) {
+      if (!validateEmail(profileData?.details?.Email)) {
         Swal.fire({
           toast: true,
           icon: "warning",
           position: "top-end",
-          title: "Email or Phone Number is mandatory",
+          title: "Invalid Email",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        return;
+      }
+      if (profileData?.details?.PhoneNumber?.length !== 9) {
+        Swal.fire({
+          toast: true,
+          icon: "warning",
+          position: "top-end",
+          title: "Invalid Phone Number",
+          showConfirmButton: false,
+          timerProgressBar: true,
+          timer: 3000,
+        });
+        return;
+      }
+      if (!notes) {
+        Swal.fire({
+          toast: true,
+          icon: "warning",
+          position: "top-end",
+          title: "Please enter notes",
           showConfirmButton: false,
           timerProgressBar: true,
           timer: 3000,
@@ -538,7 +527,6 @@ const RegisterComplaint = () => {
             </div>
           </div>
         </div>
-        
       </>
     </Layout>
   );
